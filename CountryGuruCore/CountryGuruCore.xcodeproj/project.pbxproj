@@ -21,6 +21,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B29485C2D806AB400F5FD29 /* CountryGuruCore.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = CountryGuruCore.xctestplan; path = CountryGuruCoreTests/CountryGuruCore.xctestplan; sourceTree = "<group>"; };
 		8BE00CB42D7F7E9800764127 /* CountryGuruCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CountryGuruCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BE00CBC2D7F7E9800764127 /* CountryGuruCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountryGuruCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -73,6 +74,7 @@
 		8BE00CAA2D7F7E9800764127 = {
 			isa = PBXGroup;
 			children = (
+				8B29485C2D806AB400F5FD29 /* CountryGuruCore.xctestplan */,
 				8BE00CB62D7F7E9800764127 /* CountryGuruCore */,
 				8BE00CC02D7F7E9800764127 /* CountryGuruCoreTests */,
 				8BE00CB52D7F7E9800764127 /* Products */,

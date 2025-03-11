@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "A75EB410-0DA1-4849-A096-0BCBAC770CD4",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:CountryGuruCore.xcodeproj",
+        "identifier" : "8BE00CBB2D7F7E9800764127",
+        "name" : "CountryGuruCoreTests"
+      }
+    }
+  ],
+  "version" : 1
+}
