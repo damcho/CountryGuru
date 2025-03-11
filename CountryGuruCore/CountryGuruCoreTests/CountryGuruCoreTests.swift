@@ -8,10 +8,21 @@
 import Testing
 @testable import CountryGuruCore
 
+struct CountryCapitalQuestion {
+    let countryName: String
+    
+    var queryPath: String {
+        return "/name/\(countryName)"
+    }
+}
+
 struct CountryGuruCoreTests {
 
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+    @Test func country_capital_query_path() async throws {
+        let aCountry = "aCountry"
+        let sut = CountryCapitalQuestion(countryName: aCountry)
+        
+        #expect(sut.queryPath == "/name/\(aCountry)")
     }
 
 }
