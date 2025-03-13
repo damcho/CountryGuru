@@ -9,38 +9,6 @@ import Testing
 @testable import CountryGuruCore
 import Foundation
 
-struct QueryResponse: Equatable {
-    let responseString: String
-}
-
-enum QueryResponseError: Error {
-    case decoding
-}
-
-struct DecodableCountry: Decodable {
-    let capital: [String]
-}
-
-struct CountryCapitalQuestion {
-    let countryName: String
-    
-    var queryPath: String {
-        return "/name/\(countryName)"
-    }
-    
-    func mappedResponse(from data: Data) throws -> QueryResponse {
-        let capitalCityArray = try JSONDecoder().decode(
-            [DecodableCountry].self,
-            from: data
-        )
-        guard let capitalCity = capitalCityArray.first?.capital.first else {
-            throw QueryResponseError.decoding
-        }
-        
-        return QueryResponse(responseString: capitalCity)
-    }
-}
-
 struct CountryGuruCoreTests {
 
     @Test func country_capital_query_path() async throws {
@@ -55,7 +23,7 @@ struct CountryGuruCoreTests {
         let invalidData = "invalidData".data(using: .utf8)!
         let sut = CountryCapitalQuestion(countryName: aCountry)
 
-        #expect(throws: anyError, performing: {
+        #expect(throws: DecodingError.self, performing: {
             try sut.mappedResponse(from: invalidData)
         })
     }
