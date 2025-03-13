@@ -7,6 +7,10 @@
 
 import Foundation
 
-struct CountryCapitalQuestion {
+protocol Inquiry {
+    
+}
+
+struct CountryCapitalQuestion: Inquiry {
     let countryName: String
 }
