@@ -7,9 +7,18 @@
 
 import Testing
 @testable import CountryGuruCore
+import Foundation
 
-struct QueryResponse {
-    
+struct QueryResponse: Equatable {
+    let responseString: String
+}
+
+enum QueryResponseError: Error {
+    case decoding
+}
+
+struct DecodableCountry: Decodable {
+    let capital: [String]
 }
 
 struct CountryCapitalQuestion {
@@ -19,8 +28,16 @@ struct CountryCapitalQuestion {
         return "/name/\(countryName)"
     }
     
-    var responseMapper: (Data) throws -> QueryResponse {
-        { _ in throw anyError }
+    func mappedResponse(from data: Data) throws -> QueryResponse {
+        let capitalCityArray = try JSONDecoder().decode(
+            [DecodableCountry].self,
+            from: data
+        )
+        guard let capitalCity = capitalCityArray.first?.capital.first else {
+            throw QueryResponseError.decoding
+        }
+        
+        return QueryResponse(responseString: capitalCity)
     }
 }
 
@@ -39,12 +56,26 @@ struct CountryGuruCoreTests {
         let sut = CountryCapitalQuestion(countryName: aCountry)
 
         #expect(throws: anyError, performing: {
-            try sut.responseMapper(invalidData)
+            try sut.mappedResponse(from: invalidData)
         })
+    }
+    
+    @Test func maps_response_successfully() async throws {
+        let aCountry = "Argentina"
+        let sut = CountryCapitalQuestion(countryName: aCountry)
+
+        #expect(try sut.mappedResponse(from: countryCapital.http) == countryCapital.domain)
     }
 
 }
 
 var anyError: NSError {
     NSError(domain: "", code: 0, userInfo: nil)
+}
+
+var countryCapital: (http: Data, domain: QueryResponse) {
+    (
+        #"[{"capital": ["Buenos Aires"]}]"#.data(using: .utf8)!,
+        QueryResponse(responseString: "Buenos Aires")
+    )
 }
