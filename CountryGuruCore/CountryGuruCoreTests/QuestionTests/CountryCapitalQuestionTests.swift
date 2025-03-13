@@ -9,7 +9,7 @@ import Testing
 @testable import CountryGuruCore
 import Foundation
 
-struct CountryGuruCoreTests {
+struct CountryCapitalQuestionTests {
 
     @Test func country_capital_query_path() async throws {
         let aCountry = "aCountry"
