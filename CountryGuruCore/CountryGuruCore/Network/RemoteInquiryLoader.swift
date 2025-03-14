@@ -10,7 +10,9 @@ import Foundation
 struct RemoteInquiryLoader {
     let httpClient: HTTPClient
     let baseURL: URL
-    
+}
+
+extension RemoteInquiryLoader: InquiryLoadable {
     func didAsk(_ question: Inquiry) async throws -> QueryResponse {
         let (_, data) = try await httpClient.load(
             url: question.makeURL(from: baseURL)
