@@ -13,5 +13,6 @@ protocol Inquiry {
 }
 
 struct CountryCapitalQuestion: Inquiry {
+    static let question = "What is the capital of"
     let countryName: String
 }
