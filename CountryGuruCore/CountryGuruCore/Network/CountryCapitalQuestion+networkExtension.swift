@@ -24,6 +24,10 @@ extension CountryCapitalQuestion {
         return "/name/\(countryName)"
     }
     
+    func makeURL(from baseURL: URL) -> URL {
+        baseURL.appendingPathComponent(queryPath)
+    }
+
     func mappedResponse(from data: Data) throws -> QueryResponse {
         let capitalCityArray = try JSONDecoder().decode(
             [DecodableCountry].self,
