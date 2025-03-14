@@ -8,19 +8,6 @@
 import Testing
 @testable import CountryGuruCore
 
-protocol InquiryInterpreter {
-    func inquiry(from question: String) throws -> any Inquiry
-}
-
-struct QuestionInterpreterAdapter {
-    let inquiryLoader: InquiryLoadable
-    let inquiryInterpreter: InquiryInterpreter
-    
-    func didAskRaw(_ question: String) async throws -> QueryResponse {
-        try await inquiryLoader.didAsk(inquiryInterpreter.inquiry(from: question))
-    }
-}
-
 struct QuestionInterpreterAdapterTests {
 
     @Test func throws_on_bad_question_interpretation() async throws {
