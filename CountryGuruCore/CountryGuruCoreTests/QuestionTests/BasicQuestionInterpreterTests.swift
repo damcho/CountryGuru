@@ -8,25 +8,6 @@
 import Testing
 @testable import CountryGuruCore
 
-enum InquiryInterpreterError: Error {
-    case notSupported
-}
-
-typealias InquiryCreator = (String) -> Inquiry
-
-struct BasicQuestionInterpreter {
-    let supportedInquiries: [String: InquiryCreator]
-}
-
-extension BasicQuestionInterpreter: InquiryInterpreter {
-    func inquiry(from question: String) throws -> any Inquiry {
-        guard let anInquiryCreator = supportedInquiries[question] else {
-            throw InquiryInterpreterError.notSupported
-        }
-        return anInquiryCreator(question)
-    }
-}
-
 struct BasicQuestionInterpreterTests {
 
     @Test func throws_on_no_matching_inquiry() throws {
