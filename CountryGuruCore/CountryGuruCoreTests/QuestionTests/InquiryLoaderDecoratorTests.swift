@@ -8,7 +8,7 @@
 import Testing
 @testable import CountryGuruCore
 
-struct InquiryLoaderDecoratorTests {
+struct InquiryLoaderTests {
 
     @Test func throws_on_query_error() async throws {
         let sut = makeSUT(stub: .failure(.timeout))
@@ -27,9 +27,9 @@ struct InquiryLoaderDecoratorTests {
     }
 }
 
-extension InquiryLoaderDecoratorTests {
-    func makeSUT(stub: Result<(HTTPURLResponse, Data), HTTPClientError>) -> RemoteInquiryLoaderDecorator {
-        RemoteInquiryLoaderDecorator(
+extension InquiryLoaderTests {
+    func makeSUT(stub: Result<(HTTPURLResponse, Data), HTTPClientError>) -> RemoteInquiryLoader {
+        RemoteInquiryLoader(
             httpClient: HTTPClientStub(result: stub),
             baseURL: anyURL
         )

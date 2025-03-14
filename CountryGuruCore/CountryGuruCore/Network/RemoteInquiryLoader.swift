@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RemoteInquiryLoaderDecorator {
+struct RemoteInquiryLoader {
     let httpClient: HTTPClient
     let baseURL: URL
     
