@@ -21,7 +21,7 @@ struct QuestionInterpreterAdapter {
     }
 }
 
-struct QuestionInterpreterTests {
+struct QuestionInterpreterAdapterTests {
 
     @Test func throws_on_bad_question_interpretation() async throws {
         let sut = makeSUT(interpreterStub: .failure(anyError))
@@ -44,7 +44,7 @@ struct QuestionInterpreterTests {
     }
 }
 
-extension QuestionInterpreterTests {
+extension QuestionInterpreterAdapterTests {
     func makeSUT(
         loaderStub: Result<QueryResponse, Error> = .failure(anyError),
         interpreterStub: Result<Inquiry, Error>
