@@ -8,24 +8,6 @@
 import Testing
 @testable import CountryGuruCore
 
-enum CountryGuruComposer {
-    static func compose(
-        with httpClient: HTTPClient,
-        supportedQuestions: [String: InquiryCreator]
-    ) -> QuestionInterpreterAdapter {
-        let adapter = QuestionInterpreterAdapter(
-            inquiryLoader: RemoteInquiryLoader(
-                httpClient: httpClient,
-                baseURL: anyURL
-            ),
-            inquiryInterpreter: BasicQuestionInterpreter(
-                supportedInquiries: supportedQuestions
-            )
-        )
-        return adapter
-    }
-}
-
 struct CountryGuruIntegrationTests {
 
     @Test func replies_country_question_successfully() async throws {
