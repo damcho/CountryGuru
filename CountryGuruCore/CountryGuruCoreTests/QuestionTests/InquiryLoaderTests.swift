@@ -71,16 +71,3 @@ var anyQuestion: Inquiry {
 var anyQueryResponse: QueryResponse {
     .init(responseString: "Buenos Aires")
 }
-
-var anyURL: URL {
-    URL(string: "http://any-url.com")!
-}
-
-func anyHTTPURLResponse() -> HTTPURLResponse {
-    return HTTPURLResponse(url: anyURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
-}
-
-var anyData: Data {
-    Data("any data".utf8)
-}
-
