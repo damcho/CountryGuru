@@ -9,7 +9,7 @@ enum InquiryInterpreterError: Error {
     case notSupported
 }
 
-typealias InquiryCreator = (String) -> Inquiry
+public typealias InquiryCreator = (String) -> Inquiry
 
 struct BasicQuestionInterpreter {
     let supportedInquiries: [String: InquiryCreator]

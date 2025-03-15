@@ -5,11 +5,17 @@
 //  Created by Damian Modernell on 14/3/25.
 //
 
-struct QuestionInterpreterAdapter {
+public protocol QuestionHandable {
+    func didAskRaw(_ question: String) async throws -> QueryResponse
+}
+
+public struct QuestionInterpreterAdapter {
     let inquiryLoader: InquiryLoadable
     let inquiryInterpreter: InquiryInterpreter
-    
-    func didAskRaw(_ question: String) async throws -> QueryResponse {
+}
+
+extension QuestionInterpreterAdapter: QuestionHandable {
+    public func didAskRaw(_ question: String) async throws -> QueryResponse {
         try await inquiryLoader.didAsk(inquiryInterpreter.inquiry(from: question))
     }
 }

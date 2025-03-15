@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Inquiry {
+public protocol Inquiry {
     func mappedResponse(from data: Data) throws -> QueryResponse
     func makeURL(from baseURL: URL) -> URL
 }

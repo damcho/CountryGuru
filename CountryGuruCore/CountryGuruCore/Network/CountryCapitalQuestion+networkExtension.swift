@@ -7,10 +7,6 @@
 
 import Foundation
 
-struct QueryResponse: Equatable {
-    let responseString: String
-}
-
 enum QueryResponseError: Error {
     case decoding
 }

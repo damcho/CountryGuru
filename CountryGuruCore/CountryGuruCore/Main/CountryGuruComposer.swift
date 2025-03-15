@@ -7,8 +7,9 @@
 
 import Foundation
 
-enum CountryGuruComposer {
+public enum CountryGuruComposer {
     static let dataSourceURL = URL(string: "https://restcountries.com/v3.1/")!
+    static let httpClient = URLSessionHTTPClient(session: .shared)
     
     static func compose(
         with httpClient: HTTPClient,
@@ -24,5 +25,9 @@ enum CountryGuruComposer {
             )
         )
         return adapter
+    }
+    
+    public static func compose(with inquiries: [String: InquiryCreator]) -> QuestionHandable {
+        compose(with: httpClient, supportedQuestions: inquiries)
     }
 }
