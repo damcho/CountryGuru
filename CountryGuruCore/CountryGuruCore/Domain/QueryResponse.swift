@@ -8,5 +8,5 @@
 import Foundation
 
 public struct QueryResponse: Equatable {
-    let responseString: String
+    public let responseString: String
 }

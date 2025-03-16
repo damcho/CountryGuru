@@ -8,11 +8,12 @@
 import Foundation
 
 public enum CountryGuruComposer {
-    static let dataSourceURL = URL(string: "https://restcountries.com/v3.1/")!
+    static let dataSourceURL = URL(string: "https://restcountries.com/v3.1")!
     static let httpClient = URLSessionHTTPClient(session: .shared)
     
     public static let inquiriesMap = [
-        CountryCapitalQuestion.question: { countryName in CountryCapitalQuestion(countryName: countryName) }
+        CountryCapitalQuestion.question: {
+            countryName in CountryCapitalQuestion(countryName: countryName) as Inquiry}
     ]
     
     static func compose(
