@@ -12,7 +12,7 @@ public protocol Inquiry {
     func makeURL(from baseURL: URL) -> URL
 }
 
-struct CountryCapitalQuestion: Inquiry {
+public struct CountryCapitalQuestion: Inquiry {
     static let question = "What is the capital of"
     let countryName: String
 }

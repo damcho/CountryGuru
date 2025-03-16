@@ -11,6 +11,10 @@ public enum CountryGuruComposer {
     static let dataSourceURL = URL(string: "https://restcountries.com/v3.1/")!
     static let httpClient = URLSessionHTTPClient(session: .shared)
     
+    public static let inquiriesMap = [
+        CountryCapitalQuestion.question: { countryName in CountryCapitalQuestion(countryName: countryName) }
+    ]
+    
     static func compose(
         with httpClient: HTTPClient,
         supportedQuestions: [String: InquiryCreator]
@@ -27,7 +31,7 @@ public enum CountryGuruComposer {
         return adapter
     }
     
-    public static func compose(with inquiries: [String: InquiryCreator]) -> QuestionHandable {
+    public static func compose(with inquiries: [String: InquiryCreator] = inquiriesMap) -> QuestionHandable {
         compose(with: httpClient, supportedQuestions: inquiries)
     }
 }
