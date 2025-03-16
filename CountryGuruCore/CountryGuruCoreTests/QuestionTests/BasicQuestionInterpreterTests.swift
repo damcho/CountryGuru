@@ -25,6 +25,7 @@ struct BasicQuestionInterpreterTests {
     }
     
     @Test func maps_country_capital_question_successfully() throws {
+        let countryName = "Argentina"
         let inquiryMap = [
             CountryCapitalQuestion.question:
                 { countryQuestion in
@@ -33,13 +34,11 @@ struct BasicQuestionInterpreterTests {
         ]
         
         let sut = makeSUT(with: inquiryMap)
-        
-        #expect(
-            try sut.inquiry(from: "What is the capital of")
-            is CountryCapitalQuestion
-        )
-    }
+        let question = try sut.inquiry(from: "What is the capital of \(countryName)")
 
+        #expect(question is CountryCapitalQuestion)
+        #expect((question as? CountryCapitalQuestion)?.countryName == countryName)
+    }
 }
 
 extension BasicQuestionInterpreterTests {

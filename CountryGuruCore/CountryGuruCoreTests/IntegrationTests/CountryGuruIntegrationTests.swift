@@ -15,7 +15,7 @@ struct CountryGuruIntegrationTests {
             httpStub: .success((anyHTTPURLResponse(), #"[{"capital": ["Buenos Aires"]}]"#.data(using: .utf8)!))
         )
         
-        let result = try await sut.didAskRaw(CountryCapitalQuestion.question)
+        let result = try await sut.didAskRaw("What is the capital of Argentina")
         
         #expect(result == QueryResponse(responseString: "Buenos Aires"))
     }

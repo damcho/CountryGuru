@@ -17,9 +17,16 @@ struct BasicQuestionInterpreter {
 
 extension BasicQuestionInterpreter: InquiryInterpreter {
     func inquiry(from question: String) throws -> any Inquiry {
-        guard let anInquiryCreator = supportedInquiries[question] else {
+        var splittedQUestion = question.components(separatedBy: " ")
+        guard let data = splittedQUestion.last else {
             throw InquiryInterpreterError.notSupported
         }
-        return anInquiryCreator(question)
+        
+        splittedQUestion.removeLast()
+        let questionbody = splittedQUestion.joined(separator: " ")
+        guard let anInquiryCreator = supportedInquiries[questionbody] else {
+            throw InquiryInterpreterError.notSupported
+        }
+        return anInquiryCreator(data)
     }
 }
