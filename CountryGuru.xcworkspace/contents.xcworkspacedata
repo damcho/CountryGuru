@@ -13,4 +13,7 @@
    <FileRef
       location = "group:CountryGuru/CountryGuruTests/CountryGuru.xctestplan">
    </FileRef>
+   <FileRef
+      location = "group:CountryGuruCITests.xctestplan">
+   </FileRef>
 </Workspace>
