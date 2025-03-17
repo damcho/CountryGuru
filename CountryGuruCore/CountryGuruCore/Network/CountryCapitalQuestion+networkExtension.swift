@@ -20,8 +20,14 @@ extension CountryCapitalQuestion {
         return "/name/\(countryName)"
     }
     
+    var queryItems: [URLQueryItem] {
+        [URLQueryItem(name: "fields", value: "capital")]
+    }
+    
     public func makeURL(from baseURL: URL) -> URL {
-        baseURL.appendingPathComponent(queryPath)
+        baseURL
+            .appendingPathComponent(queryPath)
+            .appending(queryItems: queryItems)
     }
 
     public func mappedResponse(from data: Data) throws -> QueryResponse {
