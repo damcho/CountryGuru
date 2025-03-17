@@ -9,42 +9,6 @@ import Testing
 
 @testable import CountryGuruCore
 
-struct DecodableOfficialName: Decodable {
-    let official: String
-}
-
-struct DecodableCountryName: Decodable {
-    let name: DecodableOfficialName
-}
-
-struct CountryPrenomQuestion {
-    let countryPrenom: String
-}
-
-extension CountryPrenomQuestion: Inquiry {
-    func mappedResponse(from data: Data) throws -> QueryResponse {
-        let countryNames = try JSONDecoder().decode(
-            [DecodableCountryName].self,
-            from: data
-        )
-        let filteredCountries = countryNames.filter { decodableCountryName in
-            decodableCountryName.name.official.hasPrefix(countryPrenom)
-        }.reduce("") { partialResult, decodableCountry in
-            partialResult.appending("\(decodableCountry.name.official)\n")
-        }
-        
-        return QueryResponse(responseString: filteredCountries)
-    }
-    
-    func makeURL(from baseURL: URL) -> URL {
-        baseURL
-            .appendingPathComponent("all")
-            .appending(
-                queryItems: [URLQueryItem(name: "fields", value: "name")]
-            )
-    }
-}
-
 struct CountryPrenomQuestionTests: InquirySpecs {
     @Test func query_path() async throws {
         #expect(anyCountryPrenomQUestion.makeURL(from: anyURL).absoluteString == "\(anyURL.absoluteString)/all?fields=name")
