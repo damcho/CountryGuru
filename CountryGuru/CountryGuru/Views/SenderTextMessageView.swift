@@ -7,16 +7,14 @@
 
 import SwiftUI
 
-struct TextMessageView: View {
+struct SenderTextMessageView: View {
     var body: some View {
-        HStack {
-            Text("Hello, World! This is a text message").padding()
-        }
+        Text("Hello, World! This is a text message").padding()
         .background(Color.red)
         .cornerRadius(50)
     }
 }
 
 #Preview {
-    TextMessageView()
+    SenderTextMessageView()
 }
