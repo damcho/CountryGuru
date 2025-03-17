@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SentTextMessageView: View {
+struct TextMessageView: View {
     var body: some View {
         Text("Hello, World! This is a text message").padding()
         .background(Color.red)
@@ -16,5 +16,5 @@ struct SentTextMessageView: View {
 }
 
 #Preview {
-    SentTextMessageView()
+    TextMessageView()
 }
