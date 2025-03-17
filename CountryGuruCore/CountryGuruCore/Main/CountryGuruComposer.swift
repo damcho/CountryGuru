@@ -13,7 +13,10 @@ public enum CountryGuruComposer {
     
     public static let inquiriesMap = [
         CountryCapitalQuestion.question: {
-            countryName in CountryCapitalQuestion(countryName: countryName) as Inquiry}
+            countryName in CountryCapitalQuestion(countryName: countryName) as Inquiry},
+        CountryPrenomQuestion.question: {
+            countryNamePrefix in CountryPrenomQuestion(countryPrenom: countryNamePrefix)
+        }
     ]
     
     static func compose(
