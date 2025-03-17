@@ -11,7 +11,7 @@ import SwiftUI
 struct CountryGuruApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            InquiryChatScreen()
         }
     }
 }
