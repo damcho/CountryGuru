@@ -9,9 +9,15 @@ import Testing
 @testable import CountryGuruCore
 import Foundation
 
-struct CountryCapitalQuestionTests {
+protocol InquirySpecs {
+    func query_path() async throws
+    func throws_on_mapping_query_response_error() async throws
+    func maps_response_successfully() async throws
+}
 
-    @Test func country_capital_query_path() async throws {
+struct CountryCapitalQuestionTests: InquirySpecs {
+
+    @Test func query_path() async throws {
         let aCountry = "aCountry"
         let sut = CountryCapitalQuestion(countryName: aCountry)
         
