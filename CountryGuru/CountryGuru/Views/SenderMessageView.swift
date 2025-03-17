@@ -17,7 +17,7 @@ struct SenderMessageView: ViewModifier {
 }
 
 extension View {
-    func senderMessageSide() -> some View {
+    func senderMessageAlignment() -> some View {
         modifier(SenderMessageView())
     }
 }
