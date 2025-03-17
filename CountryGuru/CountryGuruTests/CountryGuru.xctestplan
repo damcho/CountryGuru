@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "B07AF9A9-91FF-4F7A-AED9-936B0613AD05",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:CountryGuru.xcodeproj",
+      "identifier" : "8BD7B99B2D88B66C004D6A18",
+      "name" : "CountryGuru"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:CountryGuru.xcodeproj",
+        "identifier" : "8BD7B9AB2D88B66D004D6A18",
+        "name" : "CountryGuruTests"
+      }
+    }
+  ],
+  "version" : 1
+}

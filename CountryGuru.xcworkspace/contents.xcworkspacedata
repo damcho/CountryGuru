@@ -2,9 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:CountryGuru/CountryGuru.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "container:CountryGuruCore/CountryGuruCore.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:CountryGuruCLI/CountryGuruCLI.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CountryGuru/CountryGuruTests/CountryGuru.xctestplan">
    </FileRef>
 </Workspace>
