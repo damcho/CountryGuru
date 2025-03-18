@@ -7,14 +7,8 @@
 
 import SwiftUI
 
-class TextInputViewModel {
-    func didTapSend(with message: String) {
-        
-    }
-}
-
 struct TextInputView: View {
-    let viewModel: TextInputViewModel
+    let onSendAction: (String) -> Void
     @State private var message: String = ""
     
     var body: some View {
@@ -27,12 +21,12 @@ struct TextInputView: View {
             .textInputAutocapitalization(.never)
             
             Button("Send") {
-                viewModel.didTapSend(with: message)
+                onSendAction(message)
             }.disabled(message.isEmpty)
         }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
     }
 }
 
 #Preview {
-    TextInputView(viewModel: TextInputViewModel())
+    TextInputView(onSendAction: { _ in })
 }
