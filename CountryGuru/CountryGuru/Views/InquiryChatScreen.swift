@@ -10,14 +10,10 @@ import SwiftUI
 struct InquiryChatScreen: View {
     var body: some View {
         VStack {
-            Spacer()
-            TextField(
-                "User name",
-                text: .constant("")
-            )
-            .textFieldStyle(.roundedBorder)
-            .textInputAutocapitalization(.never)
-            .padding()
+            ScrollView {
+                QuestionAnswerView()
+            }
+            TextInputView(onSendAction: {_ in })
         }
         .padding()
     }
