@@ -22,6 +22,7 @@ struct TextInputView: View {
             
             Button("Send") {
                 onSendAction(message)
+                message = ""
             }.disabled(message.isEmpty)
         }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
     }

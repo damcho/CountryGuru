@@ -7,18 +7,37 @@
 
 import SwiftUI
 
+class InquiryViewModel: Identifiable {
+    
+}
+
+class InquiryChatScreenViewModel: ObservableObject {
+    @Published var inquiries: [InquiryViewModel] = []
+    
+    func ask(question: String) {
+        inquiries.append(InquiryViewModel())
+    }
+}
+
 struct InquiryChatScreen: View {
+    @StateObject var viewModel: InquiryChatScreenViewModel
+    
     var body: some View {
         VStack {
             ScrollView {
-                QuestionAnswerView()
+                ForEach(viewModel.inquiries) { inquiryViewModel in
+                    QuestionAnswerView()
+                }
+
             }
-            TextInputView(onSendAction: {_ in })
+            TextInputView(onSendAction: {text in
+                viewModel.ask(question: text)
+            })
         }
         .padding()
     }
 }
 
 #Preview {
-    InquiryChatScreen()
+    InquiryChatScreen(viewModel: InquiryChatScreenViewModel())
 }
