@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B50270F2D92074D002E3257 /* CountryGuruCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B50270E2D92074D002E3257 /* CountryGuruCore.framework */; };
+		8B5027102D92074D002E3257 /* CountryGuruCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B50270E2D92074D002E3257 /* CountryGuruCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8BD7B9CD2D88B876004D6A18 /* CountryGuruCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BD7B9CC2D88B876004D6A18 /* CountryGuruCore.framework */; };
 		8BD7B9CE2D88B876004D6A18 /* CountryGuruCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BD7B9CC2D88B876004D6A18 /* CountryGuruCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -22,6 +24,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		8B5027112D92074D002E3257 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8B5027102D92074D002E3257 /* CountryGuruCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8BD7B9CF2D88B876004D6A18 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -36,6 +49,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8B50270E2D92074D002E3257 /* CountryGuruCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CountryGuruCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD7B99C2D88B66C004D6A18 /* CountryGuru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountryGuru.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD7B9AC2D88B66D004D6A18 /* CountryGuruTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountryGuruTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD7B9CC2D88B876004D6A18 /* CountryGuruCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CountryGuruCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B50270F2D92074D002E3257 /* CountryGuruCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +110,7 @@
 		8BD7B9CB2D88B876004D6A18 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B50270E2D92074D002E3257 /* CountryGuruCore.framework */,
 				8BD7B9CC2D88B876004D6A18 /* CountryGuruCore.framework */,
 			);
 			name = Frameworks;
@@ -110,6 +126,7 @@
 				8BD7B9982D88B66C004D6A18 /* Sources */,
 				8BD7B9992D88B66C004D6A18 /* Frameworks */,
 				8BD7B99A2D88B66C004D6A18 /* Resources */,
+				8B5027112D92074D002E3257 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
