@@ -28,7 +28,8 @@ struct InquiryChatScreen: View {
 }
 
 #Preview {
-    InquiryChatScreen(viewModel: InquiryChatScreenViewModel(questionLoader: { _ in
-            .text("a response")
+    InquiryChatScreen(viewModel: InquiryChatScreenViewModel(
+        inquiryViewModelFactory: {
+            InquiryViewModel { _ in .text(" a response")}
     }))
 }

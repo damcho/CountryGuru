@@ -23,8 +23,10 @@ struct InquiryChatScreenViewModelTests {
 
 extension InquiryChatScreenViewModelTests {
     func makeSUT() -> InquiryChatScreenViewModel {
-        return InquiryChatScreenViewModel { _ in
-                .text("a response")
+        return InquiryChatScreenViewModel {
+            InquiryViewModel { _ in
+                    .text("a response")
+            }
         }
     }
 }

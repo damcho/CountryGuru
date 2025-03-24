@@ -13,10 +13,9 @@ struct CountryGuruApp: App {
         WindowGroup {
             InquiryChatScreen(
                 viewModel: InquiryChatScreenViewModel(
-                    questionLoader: { _ in
-                            .text("Hello World!")
-                    }
-                )
+                    inquiryViewModelFactory: {
+                        InquiryViewModel { _ in .text(" a response")}
+                })
             )
         }
     }

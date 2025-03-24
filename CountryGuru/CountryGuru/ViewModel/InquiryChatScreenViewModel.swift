@@ -9,20 +9,18 @@ import Foundation
 import CountryGuruCore
 
 typealias InquiryHandler = (String) async throws -> QueryResponse
+typealias InquiryViewModelFactory = () -> InquiryViewModel
 
 class InquiryChatScreenViewModel: ObservableObject {
     @Published var inquiries: [InquiryViewModel] = []
-    let questionLoader: InquiryHandler
+    let inquiryViewModelFactory: InquiryViewModelFactory
     
-    init(questionLoader: @escaping InquiryHandler) {
-        self.questionLoader = questionLoader
+    init(inquiryViewModelFactory: @escaping InquiryViewModelFactory) {
+        self.inquiryViewModelFactory = inquiryViewModelFactory
     }
     
     func ask(question: String) {
-        let newInquiryViewModel = InquiryViewModel { _ in
-                .text("a response")
-        }
+        let newInquiryViewModel = inquiryViewModelFactory()
         inquiries.append(newInquiryViewModel)
     }
-
 }
