@@ -6,17 +6,10 @@
 //
 
 import SwiftUI
+import CountryGuruCore
 
 class InquiryViewModel: Identifiable {
     
-}
-
-class InquiryChatScreenViewModel: ObservableObject {
-    @Published var inquiries: [InquiryViewModel] = []
-    
-    func ask(question: String) {
-        inquiries.append(InquiryViewModel())
-    }
 }
 
 struct InquiryChatScreen: View {
@@ -39,5 +32,7 @@ struct InquiryChatScreen: View {
 }
 
 #Preview {
-    InquiryChatScreen(viewModel: InquiryChatScreenViewModel())
+    InquiryChatScreen(viewModel: InquiryChatScreenViewModel(questionLoader: { _ in
+            .text("a response")
+    }))
 }

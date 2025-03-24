@@ -11,7 +11,13 @@ import SwiftUI
 struct CountryGuruApp: App {
     var body: some Scene {
         WindowGroup {
-            InquiryChatScreen(viewModel: InquiryChatScreenViewModel())
+            InquiryChatScreen(
+                viewModel: InquiryChatScreenViewModel(
+                    questionLoader: { _ in
+                            .text("Hello World!")
+                    }
+                )
+            )
         }
     }
 }

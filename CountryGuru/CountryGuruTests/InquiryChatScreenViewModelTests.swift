@@ -11,7 +11,7 @@ import Testing
 struct InquiryChatScreenViewModelTests {
 
     @Test func adds_inquiry_on_question_asked() async throws {
-        let sut = InquiryChatScreenViewModel()
+        let sut = makeSUT()
         #expect(sut.inquiries.count == 0)
 
         sut.ask(question: "What is the capital of France?")
@@ -19,4 +19,12 @@ struct InquiryChatScreenViewModelTests {
         #expect(sut.inquiries.count == 1)
     }
 
+}
+
+extension InquiryChatScreenViewModelTests {
+    func makeSUT() -> InquiryChatScreenViewModel {
+        return InquiryChatScreenViewModel { _ in
+                .text("a response")
+        }
+    }
 }
