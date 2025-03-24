@@ -14,7 +14,13 @@ while let question = readLine() {
     Task {
         do {
             let reply = try await questionHandler.didAskRaw(question)
-            print(reply.responseString)
+            switch reply {
+            case .text(let response):
+                print(response)
+            case .multiple(let multipleResponses):
+                multipleResponses.forEach { print($0) }
+            default: break
+            }
         } catch {
             print("There was an issue, please try again")
         }
