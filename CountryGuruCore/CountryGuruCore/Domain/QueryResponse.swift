@@ -7,6 +7,8 @@
 
 import Foundation
 
-public struct QueryResponse: Equatable {
-    public let responseString: String
+public enum QueryResponse: Equatable {
+    case text(String)
+    case image(URL)
+    case multiple([String])
 }

@@ -17,7 +17,7 @@ struct CountryGuruIntegrationTests {
         
         let result = try await sut.didAskRaw("What is the capital of Argentina")
         
-        #expect(result == QueryResponse(responseString: "Buenos Aires"))
+        #expect(result == .text("Buenos Aires"))
     }
 }
 

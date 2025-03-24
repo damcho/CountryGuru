@@ -39,6 +39,6 @@ extension CountryCapitalQuestion {
             throw QueryResponseError.decoding
         }
         
-        return QueryResponse(responseString: capitalCity)
+        return .text(capitalCity)
     }
 }

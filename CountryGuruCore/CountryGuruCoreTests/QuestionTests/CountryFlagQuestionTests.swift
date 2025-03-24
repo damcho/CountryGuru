@@ -40,6 +40,6 @@ func anyCountryFlagQuestion(for countryName: String) -> CountryFlagQuestion {
 var countryFlag: (http: Data, domain: QueryResponse) {
     (
         #"[{"flag": "🇦🇷"}]"#.data(using: .utf8)!,
-        QueryResponse(responseString: "🇦🇷")
+        .text("🇦🇷")
     )
 }

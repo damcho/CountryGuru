@@ -23,11 +23,9 @@ extension CountryPrenomQuestion: Inquiry {
         )
         let filteredCountries = countryNames.filter { decodableCountryName in
             decodableCountryName.name.official.lowercased().hasPrefix(countryPrenom.lowercased())
-        }.reduce("") { partialResult, decodableCountry in
-            partialResult.appending("\(decodableCountry.name.official)\n")
-        }
+        }.map({ filteredCountry in filteredCountry.name.official })
         
-        return QueryResponse(responseString: filteredCountries)
+        return .multiple(filteredCountries)
     }
     
     func makeURL(from baseURL: URL) -> URL {

@@ -69,5 +69,5 @@ var anyQuestion: Inquiry {
 }
 
 var anyQueryResponse: QueryResponse {
-    .init(responseString: "Buenos Aires")
+    .text( "Buenos Aires")
 }

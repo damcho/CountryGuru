@@ -28,7 +28,7 @@ class CountryFlagQuestion: Inquiry {
             throw QueryResponseError.decoding
         }
         
-        return QueryResponse(responseString: decodedFlag)
+        return .text(decodedFlag)
     }
     
     func makeURL(from baseURL: URL) -> URL {

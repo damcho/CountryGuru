@@ -19,7 +19,7 @@ struct QuestionInterpreterAdapterTests {
     }
     
     @Test func creates_country_capital_question_successfully() async throws {
-        let aQueryResponse = QueryResponse(responseString: "Buenos Aires")
+        let aQueryResponse = QueryResponse.text("Buenos Aires")
         let sut = makeSUT(
             loaderStub: .success(aQueryResponse),
             interpreterStub: .success(anyQuestion)

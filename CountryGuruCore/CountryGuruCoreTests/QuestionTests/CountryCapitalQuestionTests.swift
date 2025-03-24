@@ -50,6 +50,6 @@ var anyError: NSError {
 var countryCapital: (http: Data, domain: QueryResponse) {
     (
         #"[{"capital": ["Buenos Aires"]}]"#.data(using: .utf8)!,
-        QueryResponse(responseString: "Buenos Aires")
+        .text( "Buenos Aires")
     )
 }
