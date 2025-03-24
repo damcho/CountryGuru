@@ -8,10 +8,6 @@
 import SwiftUI
 import CountryGuruCore
 
-class InquiryViewModel: Identifiable {
-    
-}
-
 struct InquiryChatScreen: View {
     @StateObject var viewModel: InquiryChatScreenViewModel
     
