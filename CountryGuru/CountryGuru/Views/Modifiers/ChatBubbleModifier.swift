@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct ChatBubbleModifier: ViewModifier {
+    let isSender: Bool
     func body(content: Content) -> some View {
         content
         .padding()
-        .background(Color.red)
+        .background(isSender ? .gray : .blue)
         .cornerRadius(50)
     }
 }
 
 extension View {
-    func addChatBubble() -> some View {
-        modifier(ChatBubbleModifier())
+    func addChatBubble(sender: Bool) -> some View {
+        modifier(ChatBubbleModifier(isSender: sender))
     }
 }

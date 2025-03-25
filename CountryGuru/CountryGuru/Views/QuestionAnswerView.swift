@@ -14,7 +14,9 @@ struct QuestionAnswerView: View {
         VStack {
             TextMessageView(
                 message: viewModel.inquiry
-            ).senderMessageAlignment()
+            )
+            .addChatBubble(sender: true)
+            .senderMessageAlignment()
             AnyView(
                 viewModel.receiverView
             )
