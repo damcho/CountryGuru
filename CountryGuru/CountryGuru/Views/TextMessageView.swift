@@ -8,13 +8,11 @@
 import SwiftUI
 
 struct TextMessageView: View {
+    let message: String
     var body: some View {
-        Text("Hello, World! This is a text message").padding()
-        .background(Color.red)
-        .cornerRadius(50)
+        Text(message)
     }
 }
 
 #Preview {
-    TextMessageView()
-}
+    TextMessageView(message: "hello world")}

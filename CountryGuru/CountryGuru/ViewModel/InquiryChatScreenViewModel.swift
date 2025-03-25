@@ -22,5 +22,6 @@ class InquiryChatScreenViewModel: ObservableObject {
     func ask(question: String) {
         let newInquiryViewModel = inquiryViewModelFactory()
         inquiries.append(newInquiryViewModel)
+        _ = newInquiryViewModel.didAsk(question)
     }
 }

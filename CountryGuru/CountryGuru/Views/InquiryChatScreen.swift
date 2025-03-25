@@ -15,7 +15,9 @@ struct InquiryChatScreen: View {
         VStack {
             ScrollView {
                 ForEach(viewModel.inquiries) { inquiryViewModel in
-                    QuestionAnswerView()
+                    QuestionAnswerView(
+                        viewModel: inquiryViewModel
+                    )
                 }
 
             }
