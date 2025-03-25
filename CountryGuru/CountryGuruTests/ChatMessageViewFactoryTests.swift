@@ -8,21 +8,6 @@
 import Testing
 @testable import CountryGuru
 import CountryGuruCore
-import SwiftUI
-
-extension QueryResponse {
-    func toView() -> any View {
-        switch self {
-        case .text(let message):
-            return TextMessageView(message: message)
-        case.image(let aImageUrl):
-            return ImageMessageView(imageURL: aImageUrl)
-        case .multiple(let messages):
-            return TextMessageView(message: messages.reduce(into: "", { $0 += "\n\($1)" } ))
-        default: return EmptyView()
-        }
-    }
-}
 
 struct ChatMessageViewFactoryTests {
 
