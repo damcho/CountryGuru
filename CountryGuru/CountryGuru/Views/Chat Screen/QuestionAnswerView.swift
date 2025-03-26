@@ -29,7 +29,10 @@ struct QuestionAnswerView: View {
 }
 
 #Preview {
-    QuestionAnswerView(viewModel: InquiryViewModel(questionHandler: { _ in
-            .text("hello world")
-    }))
+    let inquiryViewModel = InquiryViewModel(questionHandler: { _ in
+            .text("all good here")
+    })
+    let view = QuestionAnswerView(viewModel: inquiryViewModel)
+    _ = inquiryViewModel.didAsk("how are you?")
+    return view
 }
