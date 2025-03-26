@@ -6,15 +6,31 @@
 //
 
 import SwiftUI
+import CountryGuruCore
+
+let countryFlagQuestion = (
+    key: CountryFlagImageQuestion.question,
+    factory: { countryName in  CountryFlagImageQuestion(countryName: countryName) }
+)
 
 @main
 struct CountryGuruApp: App {
+        
+    let questionLoader = CountryGuruComposer.compose(
+        with: [
+            countryFlagQuestion.key: countryFlagQuestion.factory,
+            CountryGuruComposer.countryCapitalInquiry.key: CountryGuruComposer.countryCapitalInquiry.factory
+        ]
+    )
+
     var body: some Scene {
         WindowGroup {
             InquiryChatScreen(
                 viewModel: InquiryChatScreenViewModel(
                     inquiryViewModelFactory: {
-                        InquiryViewModel { _ in .text(" a response")}
+                        InquiryViewModel { question in
+                            try await questionLoader.didAskRaw(question)
+                        }
                 })
             )
         }

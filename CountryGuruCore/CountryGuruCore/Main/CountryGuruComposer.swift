@@ -11,21 +11,21 @@ public enum CountryGuruComposer {
     static let dataSourceURL = URL(string: "https://restcountries.com/v3.1")!
     static let httpClient = URLSessionHTTPClient(session: .shared)
     
-    static let countryFlagInquiry = (
+    public static let countryFlagInquiry = (
         key: CountryFlagQuestion.question,
         factory: { countryName in
             CountryFlagQuestion(countryName: countryName) as Inquiry
         }
     )
     
-    static let countryCapitalInquiry = (
+    public static let countryCapitalInquiry = (
         key: CountryCapitalQuestion.question,
         factory: { countryName in
             CountryCapitalQuestion(countryName: countryName) as Inquiry
         }
     )
     
-    static let countryPrenomInquiry = (
+    public static let countryPrenomInquiry = (
         key: CountryPrenomQuestion.question,
         factory: { countryNamePrefix in
             CountryPrenomQuestion(countryPrenom: countryNamePrefix) as Inquiry
