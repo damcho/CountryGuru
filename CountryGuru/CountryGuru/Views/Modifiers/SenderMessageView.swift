@@ -12,7 +12,7 @@ struct SenderMessageView: ViewModifier {
         HStack {
             content.frame(maxWidth: 200, alignment: .leading)
             Spacer()
-        }.padding()
+        }
     }
 }
 
