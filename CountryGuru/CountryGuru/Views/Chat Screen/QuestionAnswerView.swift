@@ -19,6 +19,10 @@ struct QuestionAnswerView: View {
             .senderMessageAlignment()
             AnyView(
                 viewModel.receiverView
+                    .addChatBubble(
+                        sender: false
+                    )
+                    .receiverMessageAlignment()
             )
         }
     }
