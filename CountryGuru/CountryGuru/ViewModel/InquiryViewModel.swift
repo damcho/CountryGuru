@@ -21,7 +21,10 @@ class InquiryViewModel: Identifiable, ObservableObject {
     func didAsk(_ question: String) -> Task<Void, Error>{
         inquiry = question
         return Task {
-            _ = try await questionHandler(question)
+            let response = try await questionHandler(question)
+            await MainActor.run {
+                receiverView = response.toView()
+            }
         }
     }
 }
