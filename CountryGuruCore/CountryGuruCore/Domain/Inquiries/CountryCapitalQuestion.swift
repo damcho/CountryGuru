@@ -6,6 +6,6 @@
 //
 
 public struct CountryCapitalQuestion: Inquiry {
-    static let question = "What is the capital of"
+    static let question = "what is the capital of"
     let countryName: String
 }

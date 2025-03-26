@@ -23,7 +23,7 @@ extension BasicQuestionInterpreter: InquiryInterpreter {
         }
         
         splittedQUestion.removeLast()
-        let questionbody = splittedQUestion.joined(separator: " ")
+        let questionbody = splittedQUestion.joined(separator: " ").lowercased()
         guard let anInquiryCreator = supportedInquiries[questionbody] else {
             throw InquiryInterpreterError.notSupported
         }
