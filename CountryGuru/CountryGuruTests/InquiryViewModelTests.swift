@@ -19,20 +19,8 @@ struct InquiryViewModelTests {
             return .text("a response")
         })
         
-        let questionTask = sut.didAsk(question)
-        try await questionTask.value
+        await sut.didAsk(question)
+
         #expect(questionHandlerCallCount == 1)
-    }
-    
-    @Test func displays_inquiry_on_question_asked() async throws {
-        let question = "a question"
-        var questionHandlerCallCount = 0
-        let sut = InquiryViewModel(questionHandler: { _ in
-            questionHandlerCallCount += 1
-            return .text("a response")
-        })
-        
-        _ = sut.didAsk(question)
-        #expect(sut.inquiry == question)
     }
 }

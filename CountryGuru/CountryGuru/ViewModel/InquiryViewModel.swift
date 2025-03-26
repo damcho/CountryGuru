@@ -8,23 +8,20 @@
 import Foundation
 import SwiftUI
 
-class InquiryViewModel: Identifiable, ObservableObject {
+class InquiryViewModel: ObservableObject {
     let questionHandler: InquiryHandler
     
-    @Published var receiverView: any View = EmptyView()
-    @Published var inquiry: String = ""
+    @Published var receiverView: any View = ProgressView()
     
     init(questionHandler: @escaping InquiryHandler) {
         self.questionHandler = questionHandler
     }
 
-    func didAsk(_ question: String) -> Task<Void, Error>{
-        inquiry = question
-        return Task {
-            let response = try await questionHandler(question)
-            await MainActor.run {
-                receiverView = response.toView()
-            }
+    func didAsk(_ question: String) async {
+        do {
+            receiverView = try await questionHandler(question).toView()
+        } catch {
+            
         }
     }
 }

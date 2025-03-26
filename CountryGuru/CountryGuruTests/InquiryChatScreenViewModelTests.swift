@@ -14,7 +14,7 @@ struct InquiryChatScreenViewModelTests {
         let sut = makeSUT()
         #expect(sut.inquiries.count == 0)
 
-        sut.ask(question: "What is the capital of France?")
+        sut.ask(question: "What is the capital of France?", onQuestionResponse: {})
         
         #expect(sut.inquiries.count == 1)
     }

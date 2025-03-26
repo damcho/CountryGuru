@@ -10,19 +10,31 @@ import CountryGuruCore
 
 struct InquiryChatScreen: View {
     @StateObject var viewModel: InquiryChatScreenViewModel
-    
+    @State private var scrollPosition: ChatRow.ID?
+
     var body: some View {
         VStack {
             ScrollView {
-                ForEach(viewModel.inquiries) { inquiryViewModel in
-                    QuestionAnswerView(
-                        viewModel: inquiryViewModel
-                    )
-                }
+                LazyVStack {
+                    ForEach(viewModel.inquiries) { inquiry in
+                        if let question = inquiry.sender {
+                            TextMessageView(message: question)
+                                .addChatBubble(sender: true)
+                                .senderMessageAlignment()
 
-            }
+                        } else if let response = inquiry.receiver {
+                            AnyView(response.receiverView)
+                                .addChatBubble(sender: false)
+                                .receiverMessageAlignment()
+                        }
+                    }
+                }.scrollTargetLayout()
+            }.scrollPosition(id: $scrollPosition, anchor: .bottom)
             TextInputView(onSendAction: {text in
-                viewModel.ask(question: text)
+                scrollPosition = viewModel.inquiries.last?.id
+                viewModel.ask(question: text, onQuestionResponse: {
+                    scrollPosition = viewModel.inquiries.last?.id
+                })
             })
         }
         .padding()
