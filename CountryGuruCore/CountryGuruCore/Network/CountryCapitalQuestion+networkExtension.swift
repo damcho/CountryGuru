@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum QueryResponseError: Error {
+public enum QueryResponseError: Error {
     case decoding
 }
 

@@ -11,15 +11,15 @@ struct DecodableCountryFlag: Decodable {
     let flag: String
 }
 
-class CountryFlagQuestion: Inquiry {
-    static let question = "What is the flag of"
-    let countryName: String
+open class CountryFlagQuestion: Inquiry {
+    public static let question = "What is the flag of"
+    public let countryName: String
     
-    init(countryName: String) {
+    public init(countryName: String) {
         self.countryName = countryName
     }
     
-    func mappedResponse(from data: Data) throws -> QueryResponse {
+    open func mappedResponse(from data: Data) throws -> QueryResponse {
         let decodedCountryFlags = try JSONDecoder().decode(
             [DecodableCountryFlag].self,
             from: data
@@ -31,7 +31,7 @@ class CountryFlagQuestion: Inquiry {
         return .text(decodedFlag)
     }
     
-    func makeURL(from baseURL: URL) -> URL {
+    open func makeURL(from baseURL: URL) -> URL {
         baseURL
             .appendingPathComponent("name/\(countryName)")
             .appending(queryItems: [URLQueryItem(name: "fields", value: "flag")])
