@@ -29,12 +29,13 @@ struct InquiryChatScreen: View {
                         }
                     }
                 }.scrollTargetLayout()
-            }.scrollPosition(id: $scrollPosition, anchor: .bottom)
+            }
+            .scrollPosition(id: $scrollPosition, anchor: .bottom)
             TextInputView(onSendAction: {text in
-                scrollPosition = viewModel.inquiries.last?.id
                 viewModel.ask(question: text, onQuestionResponse: {
                     scrollPosition = viewModel.inquiries.last?.id
                 })
+                scrollPosition = viewModel.inquiries.last?.id
             })
         }
         .padding()
