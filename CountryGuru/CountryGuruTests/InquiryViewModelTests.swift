@@ -33,6 +33,16 @@ struct InquiryViewModelTests {
         await sut.didAsk(question)
 
         #expect(sut.receiverView is RetryView)
+    }
+    
+    @Test func displays_not_supported_message_on_not_supported_question() async throws {
+        let question = "a question"
+        let sut = InquiryViewModel(questionHandler: { _ in
+            throw InquiryInterpreterError.notSupported
+        })
+        
+        await sut.didAsk(question)
 
+        await #expect((sut.receiverView as? TextMessageView)?.message == "This question is not supported")
     }
 }

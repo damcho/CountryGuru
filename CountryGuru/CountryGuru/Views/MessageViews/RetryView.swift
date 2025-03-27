@@ -9,7 +9,12 @@ import SwiftUI
 
 struct RetryView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button {
+            print("tapped")
+        } label: {
+            Text("Network error, \n tap to retry")
+            Image(systemName: "arrow.clockwise.circle.fill").foregroundStyle(.red)
+        }.foregroundStyle(.red)
     }
 }
 
