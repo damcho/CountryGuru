@@ -21,7 +21,7 @@ class InquiryViewModel: ObservableObject {
         do {
             receiverView = try await questionHandler(question).toView()
         } catch {
-            
+            receiverView = await RetryView()
         }
     }
 }

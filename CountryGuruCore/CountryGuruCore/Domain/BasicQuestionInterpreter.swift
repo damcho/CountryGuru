@@ -5,7 +5,7 @@
 //  Created by Damian Modernell on 14/3/25.
 //
 
-enum InquiryInterpreterError: Error {
+public enum InquiryInterpreterError: Error {
     case notSupported
 }
 

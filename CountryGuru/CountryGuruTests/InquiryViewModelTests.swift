@@ -23,4 +23,16 @@ struct InquiryViewModelTests {
 
         #expect(questionHandlerCallCount == 1)
     }
+    
+    @Test func displays_retry_view_on_network_error() async throws {
+        let question = "a question"
+        let sut = InquiryViewModel(questionHandler: { _ in
+            throw HTTPClientError.timeout
+        })
+        
+        await sut.didAsk(question)
+
+        #expect(sut.receiverView is RetryView)
+
+    }
 }
