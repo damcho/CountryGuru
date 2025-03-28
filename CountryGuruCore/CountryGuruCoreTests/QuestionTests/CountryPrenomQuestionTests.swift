@@ -23,7 +23,7 @@ struct CountryPrenomQuestionTests: InquirySpecs {
     }
     
     @Test func maps_response_successfully() async throws {
-        let countryNameData = #"[{"name": {"official": "Argentina"}}]"#.data(using: .utf8)!
+        let countryNameData = #"[{"name": {"common": "Argentina"}}]"#.data(using: .utf8)!
         #expect(try anyCountryPrenomQUestion.mappedResponse(from: countryNameData) == .multiple( ["Argentina"]))
     }
 }
