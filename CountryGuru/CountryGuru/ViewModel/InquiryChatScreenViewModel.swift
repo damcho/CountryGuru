@@ -23,7 +23,7 @@ class InquiryChatScreenViewModel: ObservableObject {
     func ask(question: String, onQuestionResponse: @escaping () -> Void) {
         let newInquiryViewModel = inquiryViewModelFactory()
         inquiries.append(ChatRow(sender: question))
-        Task {
+            Task {
             await newInquiryViewModel.didAsk(question)
             inquiries.append(ChatRow(receiver: newInquiryViewModel))
             onQuestionResponse()

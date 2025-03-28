@@ -14,7 +14,7 @@ struct InquiryViewModelTests {
     @Test func calls_question_handler_on_did_ask_question() async throws {
         let question = "a question"
         var questionHandlerCallCount = 0
-        let sut = InquiryViewModel(questionHandler: { _ in
+        let sut = await InquiryViewModel(questionHandler: { _ in
             questionHandlerCallCount += 1
             return .text("a response")
         })
@@ -26,18 +26,18 @@ struct InquiryViewModelTests {
     
     @Test func displays_retry_view_on_network_error() async throws {
         let question = "a question"
-        let sut = InquiryViewModel(questionHandler: { _ in
+        let sut = await InquiryViewModel(questionHandler: { _ in
             throw HTTPClientError.timeout
         })
         
         await sut.didAsk(question)
 
-        #expect(sut.receiverView is RetryView)
+        #expect(await sut.receiverView is RetryView)
     }
     
     @Test func displays_not_supported_message_on_not_supported_question() async throws {
         let question = "a question"
-        let sut = InquiryViewModel(questionHandler: { _ in
+        let sut = await InquiryViewModel(questionHandler: { _ in
             throw InquiryInterpreterError.notSupported
         })
         

@@ -11,18 +11,18 @@ import Testing
 struct InquiryChatScreenViewModelTests {
 
     @Test func adds_inquiry_on_question_asked() async throws {
-        let sut = makeSUT()
-        #expect(sut.inquiries.count == 0)
+        let sut = await makeSUT()
+        #expect(await sut.inquiries.count == 0)
 
-        sut.ask(question: "What is the capital of France?", onQuestionResponse: {})
+        _ = await sut.ask(question: "What is the capital of France?", onQuestionResponse: {})
         
-        #expect(sut.inquiries.count == 1)
+        #expect(await sut.inquiries.count == 2)
     }
 
 }
 
 extension InquiryChatScreenViewModelTests {
-    func makeSUT() -> InquiryChatScreenViewModel {
+    @MainActor func makeSUT() -> InquiryChatScreenViewModel {
         return InquiryChatScreenViewModel {
             InquiryViewModel { _ in
                     .text("a response")
