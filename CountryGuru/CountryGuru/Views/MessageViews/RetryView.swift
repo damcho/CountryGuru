@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct RetryView: View {
+    let onRetry: () -> Void
+    
     var body: some View {
         Button {
-            print("tapped")
+            onRetry()
         } label: {
             Text("Network error, \n tap to retry")
             Image(systemName: "arrow.clockwise.circle.fill").foregroundStyle(.red)
@@ -19,5 +21,5 @@ struct RetryView: View {
 }
 
 #Preview {
-    RetryView()
+    RetryView(onRetry: {})
 }

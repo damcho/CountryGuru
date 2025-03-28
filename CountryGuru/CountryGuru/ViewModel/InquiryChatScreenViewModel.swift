@@ -11,6 +11,7 @@ import CountryGuruCore
 typealias InquiryHandler = (String) async throws -> QueryResponse
 typealias InquiryViewModelFactory = () -> InquiryViewModel
 
+@MainActor
 class InquiryChatScreenViewModel: ObservableObject {
     @Published var inquiries: [ChatRow] = []
     let inquiryViewModelFactory: InquiryViewModelFactory
@@ -24,10 +25,8 @@ class InquiryChatScreenViewModel: ObservableObject {
         inquiries.append(ChatRow(sender: question))
         Task {
             await newInquiryViewModel.didAsk(question)
-            await MainActor.run {
-                inquiries.append(ChatRow(receiver: newInquiryViewModel))
-                onQuestionResponse()
-            }
+            inquiries.append(ChatRow(receiver: newInquiryViewModel))
+            onQuestionResponse()
         }
     }
 }

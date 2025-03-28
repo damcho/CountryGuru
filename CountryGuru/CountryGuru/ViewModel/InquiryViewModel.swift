@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import CountryGuruCore
 
+@MainActor
 class InquiryViewModel: ObservableObject {
     let questionHandler: InquiryHandler
     
@@ -22,9 +23,17 @@ class InquiryViewModel: ObservableObject {
         do {
             receiverView = try await questionHandler(question).toView()
         } catch is HTTPClientError {
-            receiverView = await RetryView()
+            receiverView = RetryView(
+                onRetry: {[weak self] in
+                    Task {
+                        await self?.didAsk(question)
+                    }
+                }
+            )
         } catch {
-            receiverView = TextMessageView(message: "This question is not supported")
+            receiverView = TextMessageView(
+                message: "This question is not supported"
+            )
         }
     }
 }

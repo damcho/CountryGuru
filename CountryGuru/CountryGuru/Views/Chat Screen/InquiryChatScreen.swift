@@ -23,12 +23,13 @@ struct InquiryChatScreen: View {
                                 .senderMessageAlignment()
 
                         } else if let response = inquiry.receiver {
-                            AnyView(response.receiverView)
+                            ResponseView(viewModel: response)
                                 .addChatBubble(sender: false)
                                 .receiverMessageAlignment()
                         }
                     }
-                }.scrollTargetLayout()
+                }
+                .scrollTargetLayout()
             }
             .scrollPosition(id: $scrollPosition, anchor: .bottom)
             TextInputView(onSendAction: {text in
