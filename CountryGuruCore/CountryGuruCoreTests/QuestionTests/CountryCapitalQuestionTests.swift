@@ -30,7 +30,7 @@ struct CountryCapitalQuestionTests: InquirySpecs {
         let sut = CountryCapitalQuestion(countryName: aCountry)
 
         #expect(throws: DecodingError.self, performing: {
-            try sut.mappedResponse(from: invalidData)
+            try sut.mappedResponse(from: invalidData, httpURLResponse: validHTTPURLResponse)
         })
     }
     
@@ -38,7 +38,14 @@ struct CountryCapitalQuestionTests: InquirySpecs {
         let aCountry = "Argentina"
         let sut = CountryCapitalQuestion(countryName: aCountry)
 
-        #expect(try sut.mappedResponse(from: countryCapital.http) == countryCapital.domain)
+        #expect(try sut.mappedResponse(from: countryCapital.http, httpURLResponse: validHTTPURLResponse) == countryCapital.domain)
+    }
+    
+    @Test func returns_default_response_on_empty_data() async throws {
+        let aCountry = "Argentina"
+        let sut = CountryCapitalQuestion(countryName: aCountry)
+        
+        #expect(try sut.mappedResponse(from: countryCapital.http, httpURLResponse: validHTTPURLResponse) == countryCapital.domain)
     }
 
 }

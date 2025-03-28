@@ -23,7 +23,7 @@ class CountryFlagImageQuestion: CountryFlagQuestion {
             .appending(queryItems: [URLQueryItem(name: "fields", value: "flags")])
     }
     
-    override func mappedResponse(from data: Data) throws -> QueryResponse {
+    override func mappedResponse(from data: Data, httpURLResponse httpResponse: HTTPURLResponse) throws -> QueryResponse {
         let decodedCountryFlagImage = try JSONDecoder().decode(
             [DecodableCountryFlagImageRoot].self,
             from: data

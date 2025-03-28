@@ -23,7 +23,7 @@ struct CountryFlagImageQuestionTests {
         let sut = anyCountryFlagQuestion(for: aCountry)
 
         #expect(throws: DecodingError.self, performing: {
-            try sut.mappedResponse(from: invalidData)
+            try sut.mappedResponse(from: invalidData, httpURLResponse: validHTTPURLResponse)
         })
     }
     
@@ -31,7 +31,7 @@ struct CountryFlagImageQuestionTests {
         let aCountry = "Argentina"
         let sut = anyCountryFlagQuestion(for: aCountry)
 
-        #expect(try sut.mappedResponse(from: countryFlag.http) == countryFlag.domain)
+        #expect(try sut.mappedResponse(from: countryFlag.http, httpURLResponse: validHTTPURLResponse) == countryFlag.domain)
     }
 
 }
@@ -45,4 +45,8 @@ var countryFlag: (http: Data, domain: QueryResponse) {
         #"[{"flags": {"png": "https://flagcdn.com/w320/br.png"}}]"#.data(using: .utf8)!,
         .image(URL(string: "https://flagcdn.com/w320/br.png")!)
     )
+}
+
+var validHTTPURLResponse: HTTPURLResponse {
+    .init(url: URL(string: "https://restcountries.eu/")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
 }

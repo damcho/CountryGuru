@@ -30,7 +30,7 @@ extension CountryCapitalQuestion {
             .appending(queryItems: queryItems)
     }
 
-    public func mappedResponse(from data: Data) throws -> QueryResponse {
+    public func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse {
         let capitalCityArray = try JSONDecoder().decode(
             [DecodableCountry].self,
             from: data

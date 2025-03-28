@@ -16,7 +16,7 @@ struct DecodableCountryName: Decodable {
 }
 
 extension CountryPrenomQuestion: Inquiry {
-    func mappedResponse(from data: Data) throws -> QueryResponse {
+    func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse {
         let countryNames = try JSONDecoder().decode(
             [DecodableCountryName].self,
             from: data

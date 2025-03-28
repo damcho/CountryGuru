@@ -58,7 +58,7 @@ final class DummyInquirySpy: Inquiry {
         baseURL
     }
     
-    func mappedResponse(from data: Data) throws -> QueryResponse {
+    func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse {
         mappedResponseMessages.append(data)
         return anyQueryResponse
     }

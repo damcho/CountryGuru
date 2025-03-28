@@ -19,7 +19,7 @@ open class CountryFlagQuestion: Inquiry {
         self.countryName = countryName
     }
     
-    open func mappedResponse(from data: Data) throws -> QueryResponse {
+    open func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse {
         let decodedCountryFlags = try JSONDecoder().decode(
             [DecodableCountryFlag].self,
             from: data

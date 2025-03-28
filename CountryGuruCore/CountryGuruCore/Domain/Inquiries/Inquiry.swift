@@ -6,6 +6,6 @@
 //
 
 public protocol Inquiry {
-    func mappedResponse(from data: Data) throws -> QueryResponse
+    func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse
     func makeURL(from baseURL: URL) -> URL
 }

@@ -14,9 +14,9 @@ struct RemoteInquiryLoader {
 
 extension RemoteInquiryLoader: InquiryLoadable {
     func didAsk(_ question: Inquiry) async throws -> QueryResponse {
-        let (_, data) = try await httpClient.load(
+        let (httpResponse, data) = try await httpClient.load(
             url: question.makeURL(from: baseURL)
         )
-        return try question.mappedResponse(from: data)
+        return try question.mappedResponse(from: data, httpURLResponse: httpResponse)
     }
 }
