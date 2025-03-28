@@ -63,10 +63,20 @@ struct ISOalphaCountryQuestionTests: InquirySpecs {
     }
     
     @Test func maps_response_successfully() async throws {
-        
+        let aCountry = "Argentina"
+        let sut = ISOalpha2CountryQuestion(countryName: aCountry)
+
+        #expect(try sut.mappedResponse(from: cca2.http, httpURLResponse: validHTTPURLResponse) == cca2.domain)
     }
     
     @Test func throws_not_found_on_404_http_response() async throws {
         
     }
+}
+
+var cca2: (http: Data, domain: QueryResponse) {
+    (
+        #"[{"cca2": "AR"}]"#.data(using: .utf8)!,
+        .text( "AR")
+    )
 }
