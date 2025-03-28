@@ -12,6 +12,8 @@ struct DecodableAlpha2Code: Decodable {
 }
 
 struct ISOalpha2CountryQuestion: Inquiry {
+    public static let question = "what is the iso alpha-2 country code for"
+
     let countryName: String
     func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse {
         guard httpURLResponse.statusCode == 200 else {

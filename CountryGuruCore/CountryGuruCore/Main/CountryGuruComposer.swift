@@ -11,6 +11,13 @@ public enum CountryGuruComposer {
     static let dataSourceURL = URL(string: "https://restcountries.com/v3.1")!
     static let httpClient = URLSessionHTTPClient(session: .shared)
     
+    public static let iso2CountryInquiry = (
+        key: ISOalpha2CountryQuestion.question,
+        factory: { countryName in
+            ISOalpha2CountryQuestion(countryName: countryName) as Inquiry
+        }
+    )
+    
     public static let countryFlagInquiry = (
         key: CountryFlagQuestion.question,
         factory: { countryName in
@@ -35,7 +42,8 @@ public enum CountryGuruComposer {
     public static let inquiriesMap = [
         countryCapitalInquiry.key: countryCapitalInquiry.factory,
         countryPrenomInquiry.key: countryPrenomInquiry.factory,
-        countryFlagInquiry.key: countryFlagInquiry.factory
+        countryFlagInquiry.key: countryFlagInquiry.factory,
+        iso2CountryInquiry.key: iso2CountryInquiry.factory
     ]
     
     static func compose(
