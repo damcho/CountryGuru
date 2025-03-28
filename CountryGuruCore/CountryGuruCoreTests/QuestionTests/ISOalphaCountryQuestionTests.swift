@@ -8,10 +8,25 @@
 import Testing
 @testable import CountryGuruCore
 
+struct DecodableAlpha2Code: Decodable {
+    let cca2: String
+}
+
 struct ISOalpha2CountryQuestion: Inquiry {
     let countryName: String
     func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse {
-        throw anyError
+        guard httpURLResponse.statusCode == 200 else {
+            throw HTTPClientError.notFound
+        }
+        let capitalCityArray = try JSONDecoder().decode(
+            [DecodableAlpha2Code].self,
+            from: data
+        )
+        guard let cca2 = capitalCityArray.first?.cca2 else {
+            throw QueryResponseError.decoding
+        }
+        
+        return .text(cca2)
     }
     
     var queryItems: [URLQueryItem] {
@@ -38,7 +53,13 @@ struct ISOalphaCountryQuestionTests: InquirySpecs {
     }
     
     @Test func throws_on_mapping_query_response_error() async throws {
-        
+        let aCountry = "aCountry"
+        let invalidData = "invalidData".data(using: .utf8)!
+        let sut = ISOalpha2CountryQuestion(countryName: aCountry)
+
+        #expect(throws: DecodingError.self, performing: {
+            try sut.mappedResponse(from: invalidData, httpURLResponse: validHTTPURLResponse)
+        })
     }
     
     @Test func maps_response_successfully() async throws {
