@@ -70,7 +70,12 @@ struct ISOalphaCountryQuestionTests: InquirySpecs {
     }
     
     @Test func throws_not_found_on_404_http_response() async throws {
+        let aCountry = "aCountry"
+        let sut = ISOalpha2CountryQuestion(countryName: aCountry)
         
+        #expect(throws: HTTPClientError.notFound, performing: {
+            try sut.mappedResponse(from: anyData, httpURLResponse: notFOundHTTPRsponse)
+        })
     }
 }
 
