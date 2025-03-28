@@ -20,7 +20,8 @@ struct CountryGuruApp: App {
         with: [
             countryFlagQuestion.key: countryFlagQuestion.factory,
             CountryGuruComposer.countryCapitalInquiry.key: CountryGuruComposer.countryCapitalInquiry.factory,
-            CountryGuruComposer.countryPrenomInquiry.key: CountryGuruComposer.countryPrenomInquiry.factory
+            CountryGuruComposer.countryPrenomInquiry.key: CountryGuruComposer.countryPrenomInquiry.factory,
+            CountryGuruComposer.iso2CountryInquiry.key: CountryGuruComposer.iso2CountryInquiry.factory
         ]
     )
 
