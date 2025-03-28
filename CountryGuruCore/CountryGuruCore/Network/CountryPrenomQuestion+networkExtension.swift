@@ -25,6 +25,9 @@ extension CountryPrenomQuestion: Inquiry {
             decodableCountryName.name.common.lowercased().hasPrefix(countryPrenom.lowercased())
         }.map({ filteredCountry in filteredCountry.name.common })
         
+        guard !filteredCountries.isEmpty else {
+            return .multiple(["No countries match with your query"])
+        }
         return .multiple(filteredCountries)
     }
     

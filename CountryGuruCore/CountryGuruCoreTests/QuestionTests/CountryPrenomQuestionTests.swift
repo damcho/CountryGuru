@@ -26,6 +26,11 @@ struct CountryPrenomQuestionTests: InquirySpecs {
         let countryNameData = #"[{"name": {"common": "Argentina"}}]"#.data(using: .utf8)!
         #expect(try anyCountryPrenomQUestion.mappedResponse(from: countryNameData) == .multiple( ["Argentina"]))
     }
+    
+    @Test func returns_emtpy_response_message_on_empty_data() async throws {
+        let countryNameData = #"[]"#.data(using: .utf8)!
+        #expect(try anyCountryPrenomQUestion.mappedResponse(from: countryNameData) == .multiple( ["No countries match with your query"]))
+    }
 }
 
 var anyCountryPrenomQUestion: CountryPrenomQuestion {
