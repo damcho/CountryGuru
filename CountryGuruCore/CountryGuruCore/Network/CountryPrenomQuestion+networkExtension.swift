@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct DecodableOfficialName: Decodable {
-    let official: String
+struct DecodableCommonName: Decodable {
+    let common: String
 }
 
 struct DecodableCountryName: Decodable {
-    let name: DecodableOfficialName
+    let name: DecodableCommonName
 }
 
 extension CountryPrenomQuestion: Inquiry {
@@ -22,8 +22,8 @@ extension CountryPrenomQuestion: Inquiry {
             from: data
         )
         let filteredCountries = countryNames.filter { decodableCountryName in
-            decodableCountryName.name.official.lowercased().hasPrefix(countryPrenom.lowercased())
-        }.map({ filteredCountry in filteredCountry.name.official })
+            decodableCountryName.name.common.lowercased().hasPrefix(countryPrenom.lowercased())
+        }.map({ filteredCountry in filteredCountry.name.common })
         
         return .multiple(filteredCountries)
     }
