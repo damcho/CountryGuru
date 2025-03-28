@@ -18,7 +18,7 @@ extension QueryResponse {
             return ImageMessageView(imageURL: aImageUrl)
         case .multiple(let messages):
             return TextMessageView(
-                message: messages.reduce(into: "\n", { $0 += "\($1)\n" } )
+                message: messages.joined(separator: "\n")
             )
         default: return EmptyView()
         }
