@@ -10,7 +10,14 @@ import CountryGuruCore
 @testable import CountryGuru
 
 struct CountryFlagImageQuestionTests {
+    @Test func throws_not_found_on_404_http_response() async throws {
+        let aCountry = "aCountry"
 
+        #expect(throws: HTTPClientError.notFound, performing: {
+            try anyCountryFlagQuestion(for: aCountry).mappedResponse(from: anyData, httpURLResponse: notFOundHTTPRsponse)
+        })
+    }
+    
     @Test func query_path() async throws {
         let aCountry = "aCountry"
 
@@ -50,3 +57,9 @@ var countryFlag: (http: Data, domain: QueryResponse) {
 var validHTTPURLResponse: HTTPURLResponse {
     .init(url: URL(string: "https://restcountries.eu/")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
 }
+
+var notFOundHTTPRsponse: HTTPURLResponse {
+    .init(url: URL(string: "https://restcountries.eu/")!, statusCode: 404, httpVersion: nil, headerFields: nil)!
+}
+
+var anyData: Data { Data() }

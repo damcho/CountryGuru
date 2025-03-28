@@ -14,7 +14,7 @@ struct RetryView: View {
         Button {
             onRetry()
         } label: {
-            Text("Network error, \n tap to retry")
+            Text("There was either a network error, or we could not find a proper answer to your question, \n tap to retry")
             Image(systemName: "arrow.clockwise.circle.fill").foregroundStyle(.red)
         }.foregroundStyle(.red)
     }

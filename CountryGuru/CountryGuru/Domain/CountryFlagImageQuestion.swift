@@ -24,6 +24,9 @@ class CountryFlagImageQuestion: CountryFlagQuestion {
     }
     
     override func mappedResponse(from data: Data, httpURLResponse httpResponse: HTTPURLResponse) throws -> QueryResponse {
+        guard httpResponse.statusCode == 200 else {
+            throw HTTPClientError.notFound
+        }
         let decodedCountryFlagImage = try JSONDecoder().decode(
             [DecodableCountryFlagImageRoot].self,
             from: data
