@@ -9,6 +9,7 @@ import Foundation
 
 public enum HTTPClientError: Error {
     case timeout
+    case notFound
 }
 
 protocol HTTPClient {

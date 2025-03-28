@@ -20,6 +20,9 @@ open class CountryFlagQuestion: Inquiry {
     }
     
     open func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse {
+        guard httpURLResponse.statusCode == 200 else {
+            throw HTTPClientError.notFound
+        }
         let decodedCountryFlags = try JSONDecoder().decode(
             [DecodableCountryFlag].self,
             from: data

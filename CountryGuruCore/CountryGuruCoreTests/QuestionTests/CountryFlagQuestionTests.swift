@@ -9,6 +9,15 @@ import Testing
 @testable import CountryGuruCore
 
 struct CountryFlagQuestionTests: InquirySpecs {
+    @Test func throws_not_found_on_404_http_response() async throws {
+        let aCountry = "aCountry"
+        let sut = anyCountryFlagQuestion(for: aCountry)
+
+        #expect(throws: HTTPClientError.notFound, performing: {
+            try sut.mappedResponse(from: anyData, httpURLResponse: notFOundHTTPRsponse)
+        })
+    }
+    
     @Test func query_path() async throws {
         let aCountry = "aCountry"
 
@@ -46,4 +55,8 @@ var countryFlag: (http: Data, domain: QueryResponse) {
 
 var validHTTPURLResponse: HTTPURLResponse {
     .init(url: URL(string: "https://restcountries.eu/")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
+}
+
+var notFOundHTTPRsponse: HTTPURLResponse {
+    .init(url: URL(string: "https://restcountries.eu/")!, statusCode: 404, httpVersion: nil, headerFields: nil)!
 }

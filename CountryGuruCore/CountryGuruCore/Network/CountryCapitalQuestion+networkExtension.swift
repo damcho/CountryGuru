@@ -31,6 +31,9 @@ extension CountryCapitalQuestion {
     }
 
     public func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse {
+        guard httpURLResponse.statusCode == 200 else {
+            throw HTTPClientError.notFound
+        }
         let capitalCityArray = try JSONDecoder().decode(
             [DecodableCountry].self,
             from: data

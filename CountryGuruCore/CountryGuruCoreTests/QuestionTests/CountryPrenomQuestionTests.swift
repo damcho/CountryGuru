@@ -10,6 +10,12 @@ import Testing
 @testable import CountryGuruCore
 
 struct CountryPrenomQuestionTests: InquirySpecs {
+    @Test func throws_not_found_on_404_http_response() async throws {
+        #expect(throws: HTTPClientError.notFound, performing: {
+            try anyCountryPrenomQUestion.mappedResponse(from: anyData, httpURLResponse: notFOundHTTPRsponse)
+        })
+    }
+    
     @Test func query_path() async throws {
         #expect(anyCountryPrenomQUestion.makeURL(from: anyURL).absoluteString == "\(anyURL.absoluteString)/all?fields=name")
     }
