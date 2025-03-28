@@ -19,7 +19,8 @@ struct CountryGuruApp: App {
     let questionLoader = CountryGuruComposer.compose(
         with: [
             countryFlagQuestion.key: countryFlagQuestion.factory,
-            CountryGuruComposer.countryCapitalInquiry.key: CountryGuruComposer.countryCapitalInquiry.factory
+            CountryGuruComposer.countryCapitalInquiry.key: CountryGuruComposer.countryCapitalInquiry.factory,
+            CountryGuruComposer.countryPrenomInquiry.key: CountryGuruComposer.countryPrenomInquiry.factory
         ]
     )
 
