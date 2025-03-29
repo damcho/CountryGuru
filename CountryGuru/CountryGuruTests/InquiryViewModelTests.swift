@@ -7,6 +7,7 @@
 
 @testable import CountryGuru
 import CountryGuruCore
+import SwiftUI
 import Testing
 
 struct InquiryViewModelTests {
@@ -48,6 +49,15 @@ struct InquiryViewModelTests {
         await task.value
 
         await #expect((sut.receiverView as? TextMessageView)?.message == "This question is not supported")
+    }
+
+    @Test
+    func displays_Empty_view_on_init() async throws {
+        let sut = await InquiryViewModel(questionHandler: { _ in
+            throw InquiryInterpreterError.notSupported
+        })
+
+        await #expect(sut.receiverView is ProgressView<EmptyView, EmptyView>)
     }
 }
 
