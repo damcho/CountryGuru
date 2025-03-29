@@ -17,13 +17,13 @@ struct DecodableCountry: Decodable {
 
 extension CountryCapitalQuestion {
     var queryPath: String {
-        return "/name/\(countryName)"
+        "/name/\(countryName)"
     }
-    
+
     var queryItems: [URLQueryItem] {
         [URLQueryItem(name: "fields", value: "capital")]
     }
-    
+
     public func makeURL(from baseURL: URL) -> URL {
         baseURL
             .appendingPathComponent(queryPath)
@@ -41,7 +41,7 @@ extension CountryCapitalQuestion {
         guard let capitalCity = capitalCityArray.first?.capital.first else {
             throw QueryResponseError.decoding
         }
-        
+
         return .text(capitalCity)
     }
 }

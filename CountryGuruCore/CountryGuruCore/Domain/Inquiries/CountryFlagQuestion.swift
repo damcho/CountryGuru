@@ -14,11 +14,11 @@ struct DecodableCountryFlag: Decodable {
 open class CountryFlagQuestion: Inquiry {
     public static let question = "what is the flag of"
     public let countryName: String
-    
+
     public init(countryName: String) {
         self.countryName = countryName
     }
-    
+
     open func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse {
         guard httpURLResponse.statusCode == 200 else {
             throw HTTPClientError.notFound
@@ -30,10 +30,10 @@ open class CountryFlagQuestion: Inquiry {
         guard let decodedFlag = decodedCountryFlags.first?.flag else {
             throw QueryResponseError.decoding
         }
-        
+
         return .text(decodedFlag)
     }
-    
+
     open func makeURL(from baseURL: URL) -> URL {
         baseURL
             .appendingPathComponent("name/\(countryName)")

@@ -1,28 +1,29 @@
 //
-//  InquiryLoaderDecoratorTests.swift
+//  InquiryLoaderTests.swift
 //  CountryGuruCoreTests
 //
 //  Created by Damian Modernell on 13/3/25.
 //
 
-import Testing
 @testable import CountryGuruCore
+import Testing
 
 struct InquiryLoaderTests {
-
-    @Test func throws_on_query_error() async throws {
+    @Test
+    func throws_on_query_error() async throws {
         let sut = makeSUT(stub: .failure(.timeout))
 
         await #expect(throws: HTTPClientError.timeout, performing: {
             try await sut.didAsk(anyQuestion)
         })
     }
-    
-    @Test func maps_data_on_successful_loaded_response() async throws {
+
+    @Test
+    func maps_data_on_successful_loaded_response() async throws {
         let sut = makeSUT(stub: .success((anyHTTPURLResponse(), anyData)))
         let inquirySpy = DummyInquirySpy()
         _ = try await sut.didAsk(inquirySpy)
-        
+
         #expect(inquirySpy.mappedResponseMessages == [anyData])
     }
 }
@@ -45,7 +46,7 @@ struct HTTPClientStub: HTTPClient {
 
 struct InquiryLoaderStub: InquiryLoadable {
     let stub: Result<QueryResponse, Error>
-    
+
     func didAsk(_ question: Inquiry) async throws -> (QueryResponse) {
         try stub.get()
     }
@@ -57,7 +58,7 @@ final class DummyInquirySpy: Inquiry {
     func makeURL(from baseURL: URL) -> URL {
         baseURL
     }
-    
+
     func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse {
         mappedResponseMessages.append(data)
         return anyQueryResponse
@@ -69,5 +70,5 @@ var anyQuestion: Inquiry {
 }
 
 var anyQueryResponse: QueryResponse {
-    .text( "Buenos Aires")
+    .text("Buenos Aires")
 }

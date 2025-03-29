@@ -5,18 +5,18 @@
 //  Created by Damian Modernell on 14/3/25.
 //
 
-import Testing
 @testable import CountryGuruCore
+import Testing
 
 struct CountryGuruIntegrationTests {
-
-    @Test func replies_country_question_successfully() async throws {
+    @Test
+    func replies_country_question_successfully() async throws {
         let sut = makeSUT(
             httpStub: .success((anyHTTPURLResponse(), #"[{"capital": ["Buenos Aires"]}]"#.data(using: .utf8)!))
         )
-        
+
         let result = try await sut.didAskRaw("What is the capital of Argentina")
-        
+
         #expect(result == .text("Buenos Aires"))
     }
 }
@@ -27,7 +27,7 @@ extension CountryGuruIntegrationTests {
             with: HTTPClientStub(result: httpStub),
             supportedQuestions: [
                 CountryCapitalQuestion.question:
-                    {question in CountryCapitalQuestion(countryName: question)}
+                    { question in CountryCapitalQuestion(countryName: question) }
             ]
         )
     }

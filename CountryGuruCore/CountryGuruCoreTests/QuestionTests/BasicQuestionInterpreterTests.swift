@@ -5,34 +5,33 @@
 //  Created by Damian Modernell on 14/3/25.
 //
 
-import Testing
 @testable import CountryGuruCore
+import Testing
 
 struct BasicQuestionInterpreterTests {
-
-    @Test func throws_on_no_matching_inquiry() throws {
+    @Test
+    func throws_on_no_matching_inquiry() throws {
         let inquiryMap = [
-            CountryCapitalQuestion.question:
-                { countryQuestion in
-                    CountryCapitalQuestion(countryName: countryQuestion) as Inquiry
-                }
+            CountryCapitalQuestion.question: { countryQuestion in
+                CountryCapitalQuestion(countryName: countryQuestion) as Inquiry
+            }
         ]
         let sut = makeSUT(with: inquiryMap)
-        
+
         #expect(throws: InquiryInterpreterError.notSupported, performing: {
             try sut.inquiry(from: "invalid question")
         })
     }
-    
-    @Test func maps_country_capital_question_successfully() throws {
+
+    @Test
+    func maps_country_capital_question_successfully() throws {
         let countryName = "Argentina"
         let inquiryMap = [
-            CountryCapitalQuestion.question:
-                { countryQuestion in
-                    CountryCapitalQuestion(countryName: countryQuestion) as Inquiry
-                }
+            CountryCapitalQuestion.question: { countryQuestion in
+                CountryCapitalQuestion(countryName: countryQuestion) as Inquiry
+            }
         ]
-        
+
         let sut = makeSUT(with: inquiryMap)
         let question = try sut.inquiry(from: "What is the capital of \(countryName)")
 

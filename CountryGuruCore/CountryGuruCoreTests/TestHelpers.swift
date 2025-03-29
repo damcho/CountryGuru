@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public var anyNSError: NSError {
     NSError(domain: "any error", code: 0)
 }
@@ -17,11 +16,9 @@ var anyURL: URL {
 }
 
 func anyHTTPURLResponse() -> HTTPURLResponse {
-    return HTTPURLResponse(url: anyURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
+    HTTPURLResponse(url: anyURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
 }
 
 var anyData: Data {
     Data("any data".utf8)
 }
-
-

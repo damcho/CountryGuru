@@ -1,15 +1,16 @@
 //
-//  CountryFlagTests.swift
+//  CountryFlagQuestionTests.swift
 //  CountryGuruCoreTests
 //
 //  Created by Damian Modernell on 17/3/25.
 //
 
-import Testing
 @testable import CountryGuruCore
+import Testing
 
 struct CountryFlagQuestionTests: InquirySpecs {
-    @Test func throws_not_found_on_404_http_response() async throws {
+    @Test
+    func throws_not_found_on_404_http_response() async throws {
         let aCountry = "aCountry"
         let sut = anyCountryFlagQuestion(for: aCountry)
 
@@ -17,14 +18,19 @@ struct CountryFlagQuestionTests: InquirySpecs {
             try sut.mappedResponse(from: anyData, httpURLResponse: notFOundHTTPRsponse)
         })
     }
-    
-    @Test func query_path() async throws {
+
+    @Test
+    func query_path() async throws {
         let aCountry = "aCountry"
 
-        #expect(anyCountryFlagQuestion(for: aCountry).makeURL(from: anyURL).absoluteString == "\(anyURL.absoluteString)/name/\(aCountry)?fields=flag")
+        #expect(
+            anyCountryFlagQuestion(for: aCountry).makeURL(from: anyURL)
+                .absoluteString == "\(anyURL.absoluteString)/name/\(aCountry)?fields=flag"
+        )
     }
-    
-    @Test func throws_on_mapping_query_response_error() async throws {
+
+    @Test
+    func throws_on_mapping_query_response_error() async throws {
         let aCountry = "aCountry"
         let invalidData = "invalidData".data(using: .utf8)!
         let sut = anyCountryFlagQuestion(for: aCountry)
@@ -33,12 +39,16 @@ struct CountryFlagQuestionTests: InquirySpecs {
             try sut.mappedResponse(from: invalidData, httpURLResponse: validHTTPURLResponse)
         })
     }
-    
-    @Test func maps_response_successfully() async throws {
+
+    @Test
+    func maps_response_successfully() async throws {
         let aCountry = "Argentina"
         let sut = anyCountryFlagQuestion(for: aCountry)
 
-        #expect(try sut.mappedResponse(from: countryFlag.http, httpURLResponse: validHTTPURLResponse) == countryFlag.domain)
+        #expect(
+            try sut.mappedResponse(from: countryFlag.http, httpURLResponse: validHTTPURLResponse) == countryFlag
+                .domain
+        )
     }
 }
 

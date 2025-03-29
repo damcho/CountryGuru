@@ -15,6 +15,8 @@ struct DecodableCountryName: Decodable {
     let name: DecodableCommonName
 }
 
+// MARK: - CountryPrenomQuestion + Inquiry
+
 extension CountryPrenomQuestion: Inquiry {
     func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse {
         guard httpURLResponse.statusCode == 200 else {
@@ -26,14 +28,14 @@ extension CountryPrenomQuestion: Inquiry {
         )
         let filteredCountries = countryNames.filter { decodableCountryName in
             decodableCountryName.name.common.lowercased().hasPrefix(countryPrenom.lowercased())
-        }.map({ filteredCountry in filteredCountry.name.common })
-        
+        }.map { filteredCountry in filteredCountry.name.common }
+
         guard !filteredCountries.isEmpty else {
             return .multiple(["No countries match with your query"])
         }
         return .multiple(filteredCountries)
     }
-    
+
     func makeURL(from baseURL: URL) -> URL {
         baseURL
             .appendingPathComponent("all")

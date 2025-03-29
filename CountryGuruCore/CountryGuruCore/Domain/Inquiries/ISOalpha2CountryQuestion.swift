@@ -26,18 +26,18 @@ struct ISOalpha2CountryQuestion: Inquiry {
         guard let cca2 = capitalCityArray.first?.cca2 else {
             throw QueryResponseError.decoding
         }
-        
+
         return .text(cca2)
     }
-    
+
     var queryItems: [URLQueryItem] {
         [URLQueryItem(name: "fields", value: "cca2")]
     }
-    
+
     var queryPath: String {
-        return "/name/\(countryName)"
+        "/name/\(countryName)"
     }
-    
+
     func makeURL(from baseURL: URL) -> URL {
         baseURL
             .appendingPathComponent(queryPath)
