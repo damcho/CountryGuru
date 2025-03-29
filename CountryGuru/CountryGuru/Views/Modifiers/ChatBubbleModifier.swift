@@ -11,9 +11,9 @@ struct ChatBubbleModifier: ViewModifier {
     let isSender: Bool
     func body(content: Content) -> some View {
         content
-        .padding()
-        .background(isSender ? .gray : .blue)
-        .cornerRadius(50)
+            .padding()
+            .background(isSender ? .gray : .blue)
+            .cornerRadius(50)
     }
 }
 

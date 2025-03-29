@@ -1,12 +1,12 @@
 //
-//  ContentView.swift
+//  InquiryChatScreen.swift
 //  CountryGuru
 //
 //  Created by Damian Modernell on 17/3/25.
 //
 
-import SwiftUI
 import CountryGuruCore
+import SwiftUI
 
 struct InquiryChatScreen: View {
     @StateObject var viewModel: InquiryChatScreenViewModel
@@ -32,7 +32,7 @@ struct InquiryChatScreen: View {
                 .scrollTargetLayout()
             }
             .scrollPosition(id: $scrollPosition, anchor: .bottom)
-            TextInputView(onSendAction: {text in
+            TextInputView(onSendAction: { text in
                 viewModel.ask(question: text, onQuestionResponse: {
                     scrollPosition = viewModel.inquiries.last?.id
                 })
@@ -46,6 +46,7 @@ struct InquiryChatScreen: View {
 #Preview {
     InquiryChatScreen(viewModel: InquiryChatScreenViewModel(
         inquiryViewModelFactory: {
-            InquiryViewModel { _ in .text(" a response")}
-    }))
+            InquiryViewModel { _ in .text(" a response") }
+        }
+    ))
 }

@@ -20,4 +20,3 @@ struct ImageMessageView: View {
 #Preview {
     ImageMessageView(imageURL: URL(string: "www.someurl.com")!)
 }
-

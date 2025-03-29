@@ -5,17 +5,16 @@
 //  Created by Damian Modernell on 17/3/25.
 //
 
-import SwiftUI
 import CountryGuruCore
+import SwiftUI
 
 let countryFlagQuestion = (
     key: CountryFlagImageQuestion.question,
-    factory: { countryName in  CountryFlagImageQuestion(countryName: countryName) }
+    factory: { countryName in CountryFlagImageQuestion(countryName: countryName) }
 )
 
 @main
 struct CountryGuruApp: App {
-        
     let questionLoader = CountryGuruComposer.compose(
         with: [
             countryFlagQuestion.key: countryFlagQuestion.factory,
@@ -34,7 +33,8 @@ struct CountryGuruApp: App {
                             InquiryViewModel { question in
                                 try await questionLoader.didAskRaw(question)
                             }
-                    })
+                        }
+                    )
                 ).navigationTitle("Country Guru")
             }
         }

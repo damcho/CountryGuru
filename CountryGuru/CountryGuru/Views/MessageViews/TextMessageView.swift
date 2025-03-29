@@ -15,4 +15,5 @@ struct TextMessageView: View {
 }
 
 #Preview {
-    TextMessageView(message: "hello world")}
+    TextMessageView(message: "hello world")
+}

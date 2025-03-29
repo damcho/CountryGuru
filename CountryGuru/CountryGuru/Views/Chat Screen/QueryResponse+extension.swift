@@ -5,22 +5,22 @@
 //  Created by Damian Modernell on 25/3/25.
 //
 
+import CountryGuruCore
 import Foundation
 import SwiftUI
-import CountryGuruCore
 
 extension QueryResponse {
     func toView() -> any View {
         switch self {
-        case .text(let message):
-            return TextMessageView(message: message)
-        case.image(let aImageUrl):
-            return ImageMessageView(imageURL: aImageUrl)
-        case .multiple(let messages):
-            return TextMessageView(
+        case let .text(message):
+            TextMessageView(message: message)
+        case let .image(aImageUrl):
+            ImageMessageView(imageURL: aImageUrl)
+        case let .multiple(messages):
+            TextMessageView(
                 message: messages.joined(separator: "\n")
             )
-        default: return EmptyView()
+        default: EmptyView()
         }
     }
 }

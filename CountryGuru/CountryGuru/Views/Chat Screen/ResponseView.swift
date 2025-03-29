@@ -20,7 +20,7 @@ struct ResponseView: View {
     ResponseView(
         viewModel: InquiryViewModel(
             questionHandler: { _ in
-                    .text("hello world")
+                .text("hello world")
             }
         )
     )

@@ -10,7 +10,7 @@ import SwiftUI
 struct TextInputView: View {
     let onSendAction: (String) -> Void
     @State private var message: String = ""
-    
+
     var body: some View {
         HStack {
             TextField(
@@ -19,7 +19,7 @@ struct TextInputView: View {
             )
             .textFieldStyle(.roundedBorder)
             .textInputAutocapitalization(.never)
-            
+
             Button("Send") {
                 onSendAction(message)
                 message = ""

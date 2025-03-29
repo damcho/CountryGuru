@@ -5,16 +5,16 @@
 //  Created by Damian Modernell on 24/3/25.
 //
 
+import CountryGuruCore
 import Foundation
 import SwiftUI
-import CountryGuruCore
 
 @MainActor
 class InquiryViewModel: ObservableObject {
     let questionHandler: InquiryHandler
-    
+
     @Published var receiverView: any View = ProgressView()
-    
+
     init(questionHandler: @escaping InquiryHandler) {
         self.questionHandler = questionHandler
     }
@@ -24,7 +24,7 @@ class InquiryViewModel: ObservableObject {
             receiverView = try await questionHandler(question).toView()
         } catch is HTTPClientError {
             receiverView = RetryView(
-                onRetry: {[weak self] in
+                onRetry: { [weak self] in
                     Task {
                         await self?.didAsk(question)
                     }
