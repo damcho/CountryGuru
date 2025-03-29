@@ -16,4 +16,11 @@
    <FileRef
       location = "group:CountryGuruCITests.xctestplan">
    </FileRef>
+   <Group
+      location = "group:BuildTools"
+      name = "BuildTools">
+      <FileRef
+         location = "group:Package.swift">
+      </FileRef>
+   </Group>
 </Workspace>
