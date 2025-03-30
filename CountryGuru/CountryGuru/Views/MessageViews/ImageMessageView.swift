@@ -10,10 +10,24 @@ import SwiftUI
 struct ImageMessageView: View {
     let imageURL: URL
     var body: some View {
-        AsyncImage(url: imageURL)
-            .cornerRadius(20)
-            .frame(maxWidth: 200, maxHeight: 200)
-            .aspectRatio(contentMode: .fit)
+        AsyncImage(url: imageURL) { phase in
+            switch phase {
+            case let .success(image):
+                image
+                    .ignoresSafeArea()
+                    .scaledToFit()
+            case .failure:
+                Image(systemName: "exclamationmark.icloud")
+                    .resizable()
+                    .scaledToFit()
+            case .empty:
+                Color.blue
+            @unknown default: Color.blue
+            }
+        }
+        .cornerRadius(20)
+        .frame(maxWidth: 200, maxHeight: 200)
+        .aspectRatio(contentMode: .fit)
     }
 }
 
