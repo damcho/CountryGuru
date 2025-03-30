@@ -20,8 +20,7 @@ struct InquiryViewModelTests {
             return .text("a response")
         })
 
-        let task = await sut.didAsk(question)
-        await task.value
+        await sut.didAsk(question)
 
         #expect(questionHandlerCallCount == 1)
     }
@@ -33,8 +32,7 @@ struct InquiryViewModelTests {
             throw HTTPClientError.timeout
         })
 
-        let task = await sut.didAsk(question)
-        await task.value
+        await sut.didAsk(question)
         #expect(await sut.receiverView is RetryView)
     }
 
@@ -45,8 +43,7 @@ struct InquiryViewModelTests {
             throw InquiryInterpreterError.notSupported
         })
 
-        let task = await sut.didAsk(question)
-        await task.value
+        await sut.didAsk(question)
 
         await #expect((sut.receiverView as? TextMessageView)?.message == "This question is not supported")
     }
@@ -57,7 +54,7 @@ struct InquiryViewModelTests {
             throw InquiryInterpreterError.notSupported
         })
 
-        await #expect(sut.receiverView is ProgressView<EmptyView, EmptyView>)
+        await #expect(sut.receiverView is EmptyView)
     }
 }
 
