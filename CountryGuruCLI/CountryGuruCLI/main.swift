@@ -10,6 +10,7 @@ import CountryGuruCore
 
 let questionHandler = CountryGuruComposer.compose()
 
+print("Welcome to Country Guru, please ask your country question below")
 while let question = readLine() {
     Task {
         do {
