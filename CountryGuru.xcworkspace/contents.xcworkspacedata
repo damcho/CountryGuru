@@ -16,6 +16,9 @@
    <FileRef
       location = "group:CountryGuruCITests.xctestplan">
    </FileRef>
+   <FileRef
+      location = "container:README.md">
+   </FileRef>
    <Group
       location = "group:BuildTools"
       name = "BuildTools">
