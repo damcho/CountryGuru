@@ -18,12 +18,12 @@ struct InquiryChatScreen: View {
                 LazyVStack {
                     ForEach(viewModel.inquiries) { inquiry in
                         if let question = inquiry.sender {
-                            question
+                            TextMessageView(message: question)
                                 .addChatBubble(sender: true)
                                 .senderMessageAlignment()
 
                         } else if let response = inquiry.receiver {
-                            response
+                            ResponseView(viewModel: response)
                                 .addChatBubble(sender: false)
                                 .receiverMessageAlignment()
                         }

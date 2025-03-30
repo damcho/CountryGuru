@@ -11,10 +11,10 @@ import SwiftUI
 struct ChatRow: Identifiable {
     var id = UUID()
 
-    let sender: AnyView?
-    let receiver: AnyView?
+    let sender: String?
+    let receiver: InquiryViewModel?
 
-    init(sender: AnyView? = nil, receiver: AnyView? = nil) {
+    init(sender: String? = nil, receiver: InquiryViewModel? = nil) {
         self.sender = sender
         self.receiver = receiver
     }
