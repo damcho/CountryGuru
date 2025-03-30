@@ -7,6 +7,7 @@
 
 import CountryGuruCore
 import Foundation
+import SwiftUI
 
 typealias InquiryHandler = (String) async throws -> QueryResponse
 typealias InquiryViewModelFactory = () -> InquiryViewModel
@@ -22,10 +23,13 @@ class InquiryChatScreenViewModel: ObservableObject {
 
     func ask(question: String, onQuestionResponse: @escaping () -> Void) {
         let newInquiryViewModel = inquiryViewModelFactory()
-        inquiries.append(ChatRow(sender: question))
+        inquiries.append(ChatRow(sender: AnyView(TextMessageView(message: question))))
+        inquiries.append(ChatRow(receiver: AnyView(ProgressView())))
+
         Task {
             await newInquiryViewModel.didAsk(question)
-            inquiries.append(ChatRow(receiver: newInquiryViewModel))
+            inquiries.removeLast()
+            inquiries.append(ChatRow(receiver: AnyView(newInquiryViewModel.receiverView)))
             onQuestionResponse()
         }
     }
