@@ -13,22 +13,27 @@ public typealias InquiryCreator = (String) -> Inquiry
 
 struct BasicQuestionInterpreter {
     let supportedInquiries: [String: InquiryCreator]
+
+    func trim(_ question: String) -> String {
+        question.trimmingCharacters(in: CharacterSet(charactersIn: " .,:;!?")).lowercased()
+    }
 }
 
 // MARK: InquiryInterpreter
 
 extension BasicQuestionInterpreter: InquiryInterpreter {
     func inquiry(from question: String) throws -> any Inquiry {
-        var splittedQUestion = question.components(separatedBy: " ")
-        guard let data = splittedQUestion.last else {
+        let trimmedQuestion = trim(question)
+        var splittedQUestion = trimmedQuestion.components(separatedBy: " ")
+        guard let questionData = splittedQUestion.last else {
             throw InquiryInterpreterError.notSupported
         }
 
         splittedQUestion.removeLast()
-        let questionbody = splittedQUestion.joined(separator: " ").lowercased()
+        let questionbody = splittedQUestion.joined(separator: " ")
         guard let anInquiryCreator = supportedInquiries[questionbody] else {
             throw InquiryInterpreterError.notSupported
         }
-        return anInquiryCreator(data)
+        return anInquiryCreator(questionData)
     }
 }

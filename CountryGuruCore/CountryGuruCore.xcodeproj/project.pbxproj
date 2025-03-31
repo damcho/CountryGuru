@@ -7,10 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8BDC600B2D9B0AEC00EB478F /* CountryGuruCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BE00CB42D7F7E9800764127 /* CountryGuruCore.framework */; platformFilter = ios; };
 		8BE00CBD2D7F7E9800764127 /* CountryGuruCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BE00CB42D7F7E9800764127 /* CountryGuruCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8BDC600C2D9B0AEC00EB478F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8BE00CAB2D7F7E9800764127 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BE00CB32D7F7E9800764127;
+			remoteInfo = CountryGuruCore;
+		};
 		8BE00CBE2D7F7E9800764127 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8BE00CAB2D7F7E9800764127 /* Project object */;
@@ -22,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		8B29485C2D806AB400F5FD29 /* CountryGuruCore.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = CountryGuruCore.xctestplan; path = CountryGuruCoreTests/CountryGuruCore.xctestplan; sourceTree = "<group>"; };
+		8BDC60072D9B0AEC00EB478F /* CountryGuruCoreIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountryGuruCoreIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BE00CB42D7F7E9800764127 /* CountryGuruCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CountryGuruCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BE00CBC2D7F7E9800764127 /* CountryGuruCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountryGuruCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -37,6 +46,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		8BDC60082D9B0AEC00EB478F /* CountryGuruCoreIntegrationTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CountryGuruCoreIntegrationTests;
+			sourceTree = "<group>";
+		};
 		8BE00CB62D7F7E9800764127 /* CountryGuruCore */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -53,6 +67,14 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8BDC60042D9B0AEC00EB478F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BDC600B2D9B0AEC00EB478F /* CountryGuruCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8BE00CB12D7F7E9800764127 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -77,6 +99,7 @@
 				8B29485C2D806AB400F5FD29 /* CountryGuruCore.xctestplan */,
 				8BE00CB62D7F7E9800764127 /* CountryGuruCore */,
 				8BE00CC02D7F7E9800764127 /* CountryGuruCoreTests */,
+				8BDC60082D9B0AEC00EB478F /* CountryGuruCoreIntegrationTests */,
 				8BE00CB52D7F7E9800764127 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,6 +109,7 @@
 			children = (
 				8BE00CB42D7F7E9800764127 /* CountryGuruCore.framework */,
 				8BE00CBC2D7F7E9800764127 /* CountryGuruCoreTests.xctest */,
+				8BDC60072D9B0AEC00EB478F /* CountryGuruCoreIntegrationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,6 +127,29 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		8BDC60062D9B0AEC00EB478F /* CountryGuruCoreIntegrationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8BDC60102D9B0AEC00EB478F /* Build configuration list for PBXNativeTarget "CountryGuruCoreIntegrationTests" */;
+			buildPhases = (
+				8BDC60032D9B0AEC00EB478F /* Sources */,
+				8BDC60042D9B0AEC00EB478F /* Frameworks */,
+				8BDC60052D9B0AEC00EB478F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8BDC600D2D9B0AEC00EB478F /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				8BDC60082D9B0AEC00EB478F /* CountryGuruCoreIntegrationTests */,
+			);
+			name = CountryGuruCoreIntegrationTests;
+			packageProductDependencies = (
+			);
+			productName = CountryGuruCoreIntegrationTests;
+			productReference = 8BDC60072D9B0AEC00EB478F /* CountryGuruCoreIntegrationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		8BE00CB32D7F7E9800764127 /* CountryGuruCore */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BE00CC52D7F7E9800764127 /* Build configuration list for PBXNativeTarget "CountryGuruCore" */;
@@ -160,6 +207,9 @@
 				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1610;
 				TargetAttributes = {
+					8BDC60062D9B0AEC00EB478F = {
+						CreatedOnToolsVersion = 16.1;
+					};
 					8BE00CB32D7F7E9800764127 = {
 						CreatedOnToolsVersion = 16.1;
 						LastSwiftMigration = 1610;
@@ -185,11 +235,19 @@
 			targets = (
 				8BE00CB32D7F7E9800764127 /* CountryGuruCore */,
 				8BE00CBB2D7F7E9800764127 /* CountryGuruCoreTests */,
+				8BDC60062D9B0AEC00EB478F /* CountryGuruCoreIntegrationTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8BDC60052D9B0AEC00EB478F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8BE00CB22D7F7E9800764127 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -229,6 +287,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8BDC60032D9B0AEC00EB478F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8BE00CB02D7F7E9800764127 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -246,6 +311,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		8BDC600D2D9B0AEC00EB478F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 8BE00CB32D7F7E9800764127 /* CountryGuruCore */;
+			targetProxy = 8BDC600C2D9B0AEC00EB478F /* PBXContainerItemProxy */;
+		};
 		8BE00CBF2D7F7E9800764127 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8BE00CB32D7F7E9800764127 /* CountryGuruCore */;
@@ -254,6 +325,41 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		8BDC600E2D9B0AEC00EB478F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ed..CountryGuruCoreIntegrationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8BDC600F2D9B0AEC00EB478F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ed..CountryGuruCoreIntegrationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		8BE00CC62D7F7E9800764127 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -498,6 +604,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8BDC60102D9B0AEC00EB478F /* Build configuration list for PBXNativeTarget "CountryGuruCoreIntegrationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BDC600E2D9B0AEC00EB478F /* Debug */,
+				8BDC600F2D9B0AEC00EB478F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8BE00CAE2D7F7E9800764127 /* Build configuration list for PBXProject "CountryGuruCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
