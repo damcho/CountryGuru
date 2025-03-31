@@ -25,7 +25,7 @@ struct BasicQuestionInterpreterTests {
 
     @Test
     func maps_country_capital_question_successfully() throws {
-        let countryName = "Argentina"
+        let countryName = "argentina"
         let inquiryMap = [
             CountryCapitalQuestion.question: { countryQuestion in
                 CountryCapitalQuestion(countryName: countryQuestion) as Inquiry
