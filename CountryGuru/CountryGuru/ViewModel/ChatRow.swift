@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct ChatRow: Identifiable {
+final class ChatRow: Identifiable, ObservableObject {
     var id = UUID()
 
     let sender: String?

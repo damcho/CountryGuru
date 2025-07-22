@@ -11,10 +11,10 @@ import Testing
 
 struct ChatMessageViewFactoryTests {
     @Test
-    func creates_proper_message_view_on_corresponding_query_response() async throws {
-        #expect(QueryResponse.text("a message").toView() is TextMessageView)
-        #expect(QueryResponse.image(anyURL).toView() is ImageMessageView)
-        #expect(QueryResponse.multiple(["a message"]).toView() is TextMessageView)
+    func creates_proper_view_on_corresponding_query_response() async throws {
+        #expect(ResponseState.success(.text("a message")).toView() is TextMessageView)
+        #expect(ResponseState.success(.image(anyURL)).toView() is ImageMessageView)
+        #expect(ResponseState.success(.multiple(["a message"])).toView() is TextMessageView)
     }
 }
 

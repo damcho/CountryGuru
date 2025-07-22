@@ -12,7 +12,7 @@ import Testing
 
 struct InquiryViewModelTests {
     @Test
-    func calls_question_handler_on_did_ask_question() async throws {
+    func calls_question_handler_on_question_asked() async throws {
         let question = "a question"
         var questionHandlerCallCount = 0
         let sut = await InquiryViewModel(questionHandler: { _ in
@@ -20,7 +20,7 @@ struct InquiryViewModelTests {
             return .text("a response")
         })
 
-        await sut.didAsk(question)
+        await sut.ask(question)
 
         #expect(questionHandlerCallCount == 1)
     }
@@ -32,8 +32,8 @@ struct InquiryViewModelTests {
             throw HTTPClientError.timeout
         })
 
-        await sut.didAsk(question)
-        #expect(await sut.receiverView is RetryView)
+        await sut.ask(question)
+        #expect(await sut.state.toView() is RetryView)
     }
 
     @Test
@@ -43,18 +43,18 @@ struct InquiryViewModelTests {
             throw InquiryInterpreterError.notSupported
         })
 
-        await sut.didAsk(question)
+        await sut.ask(question)
 
-        await #expect((sut.receiverView as? TextMessageView)?.message == "This question is not supported")
+        await #expect((sut.state.toView() as? TextMessageView)?.message == "This question is not supported")
     }
 
     @Test
-    func displays_Empty_view_on_init() async throws {
+    func displays_progress_view_on_init() async throws {
         let sut = await InquiryViewModel(questionHandler: { _ in
             throw InquiryInterpreterError.notSupported
         })
 
-        await #expect(sut.receiverView is EmptyView)
+        await #expect(sut.state.toView() is ProgressView<EmptyView, EmptyView>)
     }
 }
 

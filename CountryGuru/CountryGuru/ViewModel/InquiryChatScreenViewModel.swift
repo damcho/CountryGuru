@@ -13,7 +13,7 @@ typealias InquiryViewModelFactory = () -> InquiryViewModel
 
 @MainActor
 class InquiryChatScreenViewModel: ObservableObject {
-    @Published var inquiries: [ChatRow] = []
+    @Published var rows: [ChatRow] = []
     let inquiryViewModelFactory: InquiryViewModelFactory
 
     init(inquiryViewModelFactory: @escaping InquiryViewModelFactory) {
@@ -22,14 +22,15 @@ class InquiryChatScreenViewModel: ObservableObject {
 
     func ask(question: String, onQuestionResponse: @escaping () -> Void) {
         let newInquiryViewModel = inquiryViewModelFactory()
-        inquiries.append(ChatRow(sender: question))
-        inquiries.append(ChatRow(receiver: newInquiryViewModel))
+        rows.append(ChatRow(sender: question))
+        rows.append(ChatRow(receiver: newInquiryViewModel))
 
-        Task {
-            await newInquiryViewModel.didAsk(question)
-            inquiries.removeLast()
-            inquiries.append(ChatRow(receiver: newInquiryViewModel))
-            onQuestionResponse()
+        Task.detached {
+            await newInquiryViewModel.ask(question)
+            await MainActor.run {
+                self.rows.append(ChatRow())
+                onQuestionResponse()
+            }
         }
     }
 }

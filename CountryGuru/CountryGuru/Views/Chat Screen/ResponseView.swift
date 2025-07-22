@@ -11,7 +11,7 @@ struct ResponseView: View {
     @StateObject var viewModel: InquiryViewModel
     var body: some View {
         AnyView(
-            viewModel.receiverView
+            viewModel.state.toView()
         )
     }
 }

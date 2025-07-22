@@ -16,17 +16,8 @@ struct InquiryChatScreen: View {
         VStack {
             ScrollView {
                 LazyVStack {
-                    ForEach(viewModel.inquiries) { inquiry in
-                        if let question = inquiry.sender {
-                            TextMessageView(message: question)
-                                .addChatBubble(sender: true)
-                                .senderMessageAlignment()
-
-                        } else if let response = inquiry.receiver {
-                            ResponseView(viewModel: response)
-                                .addChatBubble(sender: false)
-                                .receiverMessageAlignment()
-                        }
+                    ForEach(viewModel.rows) { row in
+                        InquiryView(chatRow: row)
                     }
                 }
                 .scrollTargetLayout()
@@ -34,9 +25,11 @@ struct InquiryChatScreen: View {
             .scrollPosition(id: $scrollPosition, anchor: .bottom)
             TextInputView(onSendAction: { text in
                 viewModel.ask(question: text, onQuestionResponse: {
-                    scrollPosition = viewModel.inquiries.last?.id
+                    withAnimation {
+                        scrollPosition = viewModel.rows.last?.id
+                    }
                 })
-                scrollPosition = viewModel.inquiries.last?.id
+                scrollPosition = viewModel.rows.last?.id
             })
         }
         .padding()

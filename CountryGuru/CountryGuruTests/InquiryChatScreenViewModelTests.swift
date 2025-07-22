@@ -12,11 +12,11 @@ struct InquiryChatScreenViewModelTests {
     @Test
     func adds_inquiry_on_question_asked() async throws {
         let sut = await makeSUT()
-        #expect(await sut.inquiries.count == 0)
+        #expect(await sut.rows.count == 0)
 
         _ = await sut.ask(question: "What is the capital of France?", onQuestionResponse: {})
 
-        #expect(await sut.inquiries.count == 2)
+        #expect(await sut.rows.count == 2)
     }
 }
 

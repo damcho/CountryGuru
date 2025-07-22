@@ -9,20 +9,26 @@ import SwiftUI
 
 struct ImageMessageView: View {
     let imageURL: URL
+    @State private var imageLoaded = false
     var body: some View {
         AsyncImage(url: imageURL) { phase in
             switch phase {
             case let .success(image):
                 image
-                    .ignoresSafeArea()
-                    .scaledToFit()
-            case .failure:
-                Image(systemName: "exclamationmark.icloud")
                     .resizable()
                     .scaledToFit()
+                    .opacity(imageLoaded ? 1 : 0)
+                    .onAppear {
+                        withAnimation(.easeIn(duration: 0.5)) {
+                            imageLoaded = true
+                        }
+                    }
             case .empty:
-                Color.blue
-            @unknown default: Color.blue
+                ProgressView()
+            case .failure:
+                Image(systemName: "xmark.octagon")
+            @unknown default:
+                EmptyView()
             }
         }
         .cornerRadius(20)

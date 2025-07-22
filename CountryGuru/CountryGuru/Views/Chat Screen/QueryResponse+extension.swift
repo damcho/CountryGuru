@@ -9,18 +9,35 @@ import CountryGuruCore
 import Foundation
 import SwiftUI
 
-extension QueryResponse {
+extension ResponseState {
     func toView() -> any View {
         switch self {
-        case let .text(message):
-            TextMessageView(message: message)
-        case let .image(aImageUrl):
-            ImageMessageView(imageURL: aImageUrl)
-        case let .multiple(messages):
-            TextMessageView(
-                message: messages.joined(separator: "\n")
+        case .processing:
+            ProgressView()
+        case let .error(ask, question):
+            RetryView(
+                onRetry: {
+                    Task {
+                        await ask(question)
+                    }
+                }
             )
-        default: EmptyView()
+        case .notSupported:
+            TextMessageView(
+                message: "This question is not supported"
+            )
+        case let .success(response):
+            switch response {
+            case let .text(message):
+                TextMessageView(message: message)
+            case let .image(aImageUrl):
+                ImageMessageView(imageURL: aImageUrl)
+            case let .multiple(messages):
+                TextMessageView(
+                    message: messages.joined(separator: "\n")
+                )
+            default: EmptyView()
+            }
         }
     }
 }

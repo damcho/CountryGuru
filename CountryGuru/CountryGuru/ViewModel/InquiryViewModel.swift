@@ -9,31 +9,32 @@ import CountryGuruCore
 import Foundation
 import SwiftUI
 
+typealias InquiryChatHandler = (String) async -> Void
+
+enum ResponseState {
+    case processing
+    case success(QueryResponse)
+    case error(InquiryChatHandler, String)
+    case notSupported
+}
+
 @MainActor
 class InquiryViewModel: ObservableObject {
     let questionHandler: InquiryHandler
 
-    @Published var receiverView: any View = EmptyView()
+    @Published var state: ResponseState = .processing
 
     init(questionHandler: @escaping InquiryHandler) {
         self.questionHandler = questionHandler
     }
 
-    func didAsk(_ question: String) async {
+    func ask(_ question: String) async {
         do {
-            receiverView = try await questionHandler(question).toView()
+            state = try await .success(questionHandler(question))
         } catch is HTTPClientError {
-            receiverView = RetryView(
-                onRetry: { [weak self] in
-                    Task {
-                        await self?.didAsk(question)
-                    }
-                }
-            )
+            state = .error(ask, question)
         } catch {
-            receiverView = TextMessageView(
-                message: "This question is not supported"
-            )
+            state = .notSupported
         }
     }
 }
