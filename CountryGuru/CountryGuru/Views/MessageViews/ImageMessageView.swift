@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ImageMessageView: View {
     let imageURL: URL
-    @State private var imageLoaded = false
     var body: some View {
         AsyncImage(url: imageURL) { phase in
             switch phase {
@@ -17,12 +16,6 @@ struct ImageMessageView: View {
                 image
                     .resizable()
                     .scaledToFit()
-                    .opacity(imageLoaded ? 1 : 0)
-                    .onAppear {
-                        withAnimation(.easeIn(duration: 0.5)) {
-                            imageLoaded = true
-                        }
-                    }
             case .empty:
                 ProgressView()
             case .failure:

@@ -1,5 +1,5 @@
 //
-//  QueryResponse+extension.swift
+//  ResponseState+extension.swift
 //  CountryGuru
 //
 //  Created by Damian Modernell on 25/3/25.
@@ -13,7 +13,7 @@ extension ResponseState {
     func toView() -> any View {
         switch self {
         case .processing:
-            ProgressView()
+            ProgressView().padding()
         case let .error(ask, question):
             RetryView(
                 onRetry: {

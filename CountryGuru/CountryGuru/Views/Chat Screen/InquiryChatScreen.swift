@@ -10,29 +10,44 @@ import SwiftUI
 
 struct InquiryChatScreen: View {
     @StateObject var viewModel: InquiryChatScreenViewModel
-    @State private var scrollPosition: ChatRow.ID?
-
+    @State private var scrollTrigger: UUID?
+    let dummyLastRow: some View = Color.clear
+        .frame(height: 1)
+        .id("bottom")
     var body: some View {
         VStack {
-            ScrollView {
-                LazyVStack {
-                    ForEach(viewModel.rows) { row in
-                        InquiryView(chatRow: row)
+            ScrollViewReader { proxy in
+                ScrollView {
+                    LazyVStack {
+                        ForEach(viewModel.rows) { row in
+                            InquiryView(chatRow: row)
+                        }
+                        dummyLastRow
                     }
+                    .scrollTargetLayout()
                 }
-                .scrollTargetLayout()
+                .onChange(of: scrollTrigger) {
+                    scrollToBottom(proxy)
+                }
+                .onAppear {
+                    scrollToBottom(proxy)
+                }
             }
-            .scrollPosition(id: $scrollPosition, anchor: .bottom)
+
             TextInputView(onSendAction: { text in
                 viewModel.ask(question: text, onQuestionResponse: {
-                    withAnimation {
-                        scrollPosition = viewModel.rows.last?.id
-                    }
+                    scrollTrigger = UUID()
                 })
-                scrollPosition = viewModel.rows.last?.id
+                scrollTrigger = UUID()
             })
         }
         .padding()
+    }
+
+    private func scrollToBottom(_ proxy: ScrollViewProxy) {
+        withAnimation {
+            proxy.scrollTo("bottom", anchor: .bottom)
+        }
     }
 }
 

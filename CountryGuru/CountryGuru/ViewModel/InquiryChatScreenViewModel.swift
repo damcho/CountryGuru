@@ -28,7 +28,6 @@ class InquiryChatScreenViewModel: ObservableObject {
         Task.detached {
             await newInquiryViewModel.ask(question)
             await MainActor.run {
-                self.rows.append(ChatRow())
                 onQuestionResponse()
             }
         }
