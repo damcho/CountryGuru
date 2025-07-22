@@ -13,7 +13,7 @@ extension ResponseState {
     func toView() -> any View {
         switch self {
         case .processing:
-            ProgressView().padding()
+            ProgressView()
         case let .error(ask, question):
             RetryView(
                 onRetry: {
