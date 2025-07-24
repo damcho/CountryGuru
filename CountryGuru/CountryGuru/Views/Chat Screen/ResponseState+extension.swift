@@ -23,18 +23,18 @@ extension ResponseState {
                 }
             )
         case .notSupported:
-            TextMessageView(
-                message: "This question is not supported"
+            Text(
+                "This question is not supported"
             )
         case let .success(response):
             switch response {
             case let .text(message):
-                TextMessageView(message: message)
+                Text(message)
             case let .image(aImageUrl):
                 ImageMessageView(imageURL: aImageUrl)
             case let .multiple(messages):
-                TextMessageView(
-                    message: messages.joined(separator: "\n")
+                Text(
+                    messages.joined(separator: "\n")
                 )
             default: EmptyView()
             }

@@ -24,7 +24,7 @@ extension InquiryChatScreenViewModelTests {
     @MainActor
     func makeSUT() -> InquiryChatScreenViewModel {
         InquiryChatScreenViewModel {
-            InquiryViewModel { _ in
+            InquiryResponseViewModel { _ in
                 .text("a response")
             }
         }

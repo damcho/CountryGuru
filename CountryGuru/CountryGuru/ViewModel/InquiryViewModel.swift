@@ -19,7 +19,7 @@ enum ResponseState {
 }
 
 @MainActor
-class InquiryViewModel: ObservableObject {
+class InquiryResponseViewModel: ObservableObject {
     let questionHandler: InquiryHandler
 
     @Published var state: ResponseState = .processing
@@ -36,5 +36,13 @@ class InquiryViewModel: ObservableObject {
         } catch {
             state = .notSupported
         }
+    }
+}
+
+// MARK: ViewableChatMessage
+
+extension InquiryResponseViewModel: ViewableChatMessage {
+    nonisolated func toChatMessageView() -> some View {
+        ResponseView(viewModel: self)
     }
 }

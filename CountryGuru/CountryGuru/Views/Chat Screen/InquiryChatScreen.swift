@@ -20,7 +20,9 @@ struct InquiryChatScreen: View {
                 ScrollView {
                     LazyVStack {
                         ForEach(viewModel.rows) { row in
-                            InquiryView(chatRow: row)
+                            AnyView(
+                                row.message.toChatMessageView()
+                            )
                         }
                         dummyLastRow
                     }
@@ -53,8 +55,8 @@ struct InquiryChatScreen: View {
 
 #Preview {
     InquiryChatScreen(viewModel: InquiryChatScreenViewModel(
-        inquiryViewModelFactory: {
-            InquiryViewModel { _ in .text(" a response") }
+        inquiryResolverFactory: {
+            InquiryResponseViewModel { _ in .text(" a response") }
         }
     ))
 }

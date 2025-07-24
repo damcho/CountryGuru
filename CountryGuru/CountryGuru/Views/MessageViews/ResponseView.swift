@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct ResponseView: View {
-    @StateObject var viewModel: InquiryViewModel
+    @StateObject var viewModel: InquiryResponseViewModel
     var body: some View {
         AnyView(
             viewModel.state.toView()
         )
+        .addChatBubble(sender: false)
+        .receiverMessageAlignment()
     }
 }
 
 #Preview {
     ResponseView(
-        viewModel: InquiryViewModel(
+        viewModel: InquiryResponseViewModel(
             questionHandler: { _ in
                 .text("hello world")
             }

@@ -29,8 +29,8 @@ struct CountryGuruApp: App {
             NavigationStack {
                 InquiryChatScreen(
                     viewModel: InquiryChatScreenViewModel(
-                        inquiryViewModelFactory: {
-                            InquiryViewModel { question in
+                        inquiryResolverFactory: {
+                            InquiryResponseViewModel { question in
                                 try await questionLoader.didAskRaw(question)
                             }
                         }

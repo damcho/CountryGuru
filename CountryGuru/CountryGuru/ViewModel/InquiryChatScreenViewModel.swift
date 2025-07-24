@@ -9,24 +9,24 @@ import CountryGuruCore
 import Foundation
 
 typealias InquiryHandler = (String) async throws -> QueryResponse
-typealias InquiryViewModelFactory = () -> InquiryViewModel
+typealias InquiryResolverFactory = () -> InquiryResponseViewModel
 
 @MainActor
 class InquiryChatScreenViewModel: ObservableObject {
-    @Published var rows: [ChatRow] = []
-    let inquiryViewModelFactory: InquiryViewModelFactory
+    @Published var rows: [IdentifiableChatRow] = []
+    let inquiryResolverFactory: InquiryResolverFactory
 
-    init(inquiryViewModelFactory: @escaping InquiryViewModelFactory) {
-        self.inquiryViewModelFactory = inquiryViewModelFactory
+    init(inquiryResolverFactory: @escaping InquiryResolverFactory) {
+        self.inquiryResolverFactory = inquiryResolverFactory
     }
 
     func ask(question: String, onQuestionResponse: @escaping () -> Void) {
-        let newInquiryViewModel = inquiryViewModelFactory()
-        rows.append(ChatRow(sender: question))
-        rows.append(ChatRow(receiver: newInquiryViewModel))
+        let inquiryResolver = inquiryResolverFactory()
+        rows.append(IdentifiableChatRow(message: question))
+        rows.append(IdentifiableChatRow(message: inquiryResolver))
 
         Task.detached {
-            await newInquiryViewModel.ask(question)
+            await inquiryResolver.ask(question)
             await MainActor.run {
                 onQuestionResponse()
             }
