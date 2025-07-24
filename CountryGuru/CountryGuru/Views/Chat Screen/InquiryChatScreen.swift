@@ -37,7 +37,7 @@ struct InquiryChatScreen: View {
             }
 
             TextInputView(onSendAction: { text in
-                viewModel.ask(question: text, onQuestionResponse: {
+                viewModel.ask(question: text, onInquiryResponse: {
                     scrollTrigger = UUID()
                 })
                 scrollTrigger = UUID()

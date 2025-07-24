@@ -20,7 +20,7 @@ class InquiryChatScreenViewModel: ObservableObject {
         self.inquiryResolverFactory = inquiryResolverFactory
     }
 
-    func ask(question: String, onQuestionResponse: @escaping () -> Void) {
+    func ask(question: String, onInquiryResponse: @escaping () -> Void) {
         let inquiryResolver = inquiryResolverFactory()
         rows.append(IdentifiableChatRow(message: question))
         rows.append(IdentifiableChatRow(message: inquiryResolver))
@@ -28,7 +28,7 @@ class InquiryChatScreenViewModel: ObservableObject {
         Task.detached {
             await inquiryResolver.ask(question)
             await MainActor.run {
-                onQuestionResponse()
+                onInquiryResponse()
             }
         }
     }
