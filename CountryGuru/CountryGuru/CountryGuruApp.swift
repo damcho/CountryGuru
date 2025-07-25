@@ -13,15 +13,29 @@ let countryFlagQuestion = (
     factory: { countryName in CountryFlagImageQuestion(countryName: countryName) }
 )
 
+let inquiriesArray = [
+    AnyInquiry(
+        question: countryFlagQuestion.key,
+        inquiryCreator: countryFlagQuestion.factory
+    ),
+    AnyInquiry(
+        question: CountryGuruComposer.countryCapitalInquiry.key,
+        inquiryCreator: CountryGuruComposer.countryCapitalInquiry.factory
+    ),
+    AnyInquiry(
+        question: CountryGuruComposer.countryPrenomInquiry.key,
+        inquiryCreator: CountryGuruComposer.countryPrenomInquiry.factory
+    ),
+    AnyInquiry(
+        question: CountryGuruComposer.iso2CountryInquiry.key,
+        inquiryCreator: CountryGuruComposer.iso2CountryInquiry.factory
+    )
+]
+
 @main
 struct CountryGuruApp: App {
     let questionLoader = CountryGuruComposer.compose(
-        with: [
-            countryFlagQuestion.key: countryFlagQuestion.factory,
-            CountryGuruComposer.countryCapitalInquiry.key: CountryGuruComposer.countryCapitalInquiry.factory,
-            CountryGuruComposer.countryPrenomInquiry.key: CountryGuruComposer.countryPrenomInquiry.factory,
-            CountryGuruComposer.iso2CountryInquiry.key: CountryGuruComposer.iso2CountryInquiry.factory
-        ]
+        with: inquiriesArray
     )
 
     var body: some Scene {

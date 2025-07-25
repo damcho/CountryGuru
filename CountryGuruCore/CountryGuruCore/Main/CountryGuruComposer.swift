@@ -39,16 +39,28 @@ public enum CountryGuruComposer {
         }
     )
 
-    public static let inquiriesMap = [
-        countryCapitalInquiry.key: countryCapitalInquiry.factory,
-        countryPrenomInquiry.key: countryPrenomInquiry.factory,
-        countryFlagInquiry.key: countryFlagInquiry.factory,
-        iso2CountryInquiry.key: iso2CountryInquiry.factory
+    public static let inquiriesArray = [
+        AnyInquiry(
+            question: countryCapitalInquiry.key,
+            inquiryCreator: countryCapitalInquiry.factory
+        ),
+        AnyInquiry(
+            question: countryPrenomInquiry.key,
+            inquiryCreator: countryPrenomInquiry.factory
+        ),
+        AnyInquiry(
+            question: countryFlagInquiry.key,
+            inquiryCreator: countryFlagInquiry.factory
+        ),
+        AnyInquiry(
+            question: iso2CountryInquiry.key,
+            inquiryCreator: iso2CountryInquiry.factory
+        )
     ]
 
     static func compose(
         with httpClient: HTTPClient,
-        supportedQuestions: [String: InquiryCreator]
+        supportedQuestions: [AnyInquiry]
     )
         -> QuestionInterpreterAdapter
     {
@@ -64,7 +76,7 @@ public enum CountryGuruComposer {
         return adapter
     }
 
-    public static func compose(with inquiries: [String: InquiryCreator] = inquiriesMap) -> QuestionHandable {
+    public static func compose(with inquiries: [AnyInquiry] = inquiriesArray) -> QuestionHandable {
         compose(with: httpClient, supportedQuestions: inquiries)
     }
 }

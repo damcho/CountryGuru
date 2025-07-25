@@ -11,11 +11,32 @@ public enum InquiryInterpreterError: Error {
 
 public typealias InquiryCreator = (String) -> Inquiry
 
+public struct AnyInquiry {
+    let question: String
+    let inquiryCreator: InquiryCreator
+
+    public init(question: String, inquiryCreator: @escaping InquiryCreator) {
+        self.question = question
+        self.inquiryCreator = inquiryCreator
+    }
+}
+
 struct BasicQuestionInterpreter {
-    let supportedInquiries: [String: InquiryCreator]
+    let supportedInquiries: [AnyInquiry]
 
     func trim(_ question: String) -> String {
         question.trimmingCharacters(in: CharacterSet(charactersIn: " .,:;!?")).lowercased()
+    }
+
+    private func supportedInquiry(for question: String) throws -> AnyInquiry {
+        guard
+            let anInquiry = supportedInquiries.first(where: { inquiry in
+                question.contains(inquiry.question.lowercased())
+            })
+        else {
+            throw InquiryInterpreterError.notSupported
+        }
+        return anInquiry
     }
 }
 
@@ -24,16 +45,12 @@ struct BasicQuestionInterpreter {
 extension BasicQuestionInterpreter: InquiryInterpreter {
     func inquiry(from question: String) throws -> any Inquiry {
         let trimmedQuestion = trim(question)
-        var splittedQUestion = trimmedQuestion.components(separatedBy: " ")
-        guard let questionData = splittedQUestion.last else {
-            throw InquiryInterpreterError.notSupported
-        }
+        let anInquiry = try supportedInquiry(for: trimmedQuestion)
+        let questionData = trimmedQuestion.replacingOccurrences(
+            of: anInquiry.question,
+            with: ""
+        ).trimmingCharacters(in: .whitespaces)
 
-        splittedQUestion.removeLast()
-        let questionbody = splittedQUestion.joined(separator: " ")
-        guard let anInquiryCreator = supportedInquiries[questionbody] else {
-            throw InquiryInterpreterError.notSupported
-        }
-        return anInquiryCreator(questionData)
+        return anInquiry.inquiryCreator(questionData)
     }
 }

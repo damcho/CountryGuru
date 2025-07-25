@@ -14,7 +14,7 @@ struct InquiryChatScreenViewModelTests {
         let sut = await makeSUT()
         #expect(await sut.rows.count == 0)
 
-        _ = await sut.ask(question: "What is the capital of France?", onQuestionResponse: {})
+        _ = await sut.ask(question: "What is the capital of France?", onInquiryResponse: {})
 
         #expect(await sut.rows.count == 2)
     }

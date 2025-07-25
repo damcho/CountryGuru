@@ -26,8 +26,10 @@ extension CountryGuruIntegrationTests {
         CountryGuruComposer.compose(
             with: HTTPClientStub(result: httpStub),
             supportedQuestions: [
-                CountryCapitalQuestion.question:
-                    { question in CountryCapitalQuestion(countryName: question) }
+                AnyInquiry(
+                    question: CountryCapitalQuestion.question,
+                    inquiryCreator: { question in CountryCapitalQuestion(countryName: question) }
+                )
             ]
         )
     }
