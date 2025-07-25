@@ -8,34 +8,23 @@
 import CountryGuruCore
 import SwiftUI
 
-let countryFlagQuestion = (
-    key: CountryFlagImageQuestion.question,
-    factory: { countryName in CountryFlagImageQuestion(countryName: countryName) }
-)
-
-let inquiriesArray = [
+let countryFlagQuestion =
     AnyInquiry(
-        question: countryFlagQuestion.key,
-        inquiryCreator: countryFlagQuestion.factory
-    ),
-    AnyInquiry(
-        question: CountryGuruComposer.countryCapitalInquiry.key,
-        inquiryCreator: CountryGuruComposer.countryCapitalInquiry.factory
-    ),
-    AnyInquiry(
-        question: CountryGuruComposer.countryPrenomInquiry.key,
-        inquiryCreator: CountryGuruComposer.countryPrenomInquiry.factory
-    ),
-    AnyInquiry(
-        question: CountryGuruComposer.iso2CountryInquiry.key,
-        inquiryCreator: CountryGuruComposer.iso2CountryInquiry.factory
+        question: CountryFlagImageQuestion.question,
+        inquiryCreator: { countryName in CountryFlagImageQuestion(countryName: countryName) }
     )
+
+let supportedInquiriesArray = [
+    CountryGuruComposer.countryCapitalInquiry,
+    CountryGuruComposer.countryPrenomInquiry,
+    countryFlagQuestion,
+    CountryGuruComposer.iso2CountryInquiry
 ]
 
 @main
 struct CountryGuruApp: App {
     let questionLoader = CountryGuruComposer.compose(
-        with: inquiriesArray
+        with: supportedInquiriesArray
     )
 
     var body: some Scene {
