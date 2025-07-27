@@ -1,9 +1,12 @@
 # CountryGuru
-little CLI and iOS apps that replies to inquiries about any country in the world
+ChatLike iOS apps and terminal CLI app that replies to inquiries related to any country in the world
 
-## Available inquiries
+# How it works
+Type one of the supported inquiries and hit send, the app will retrieve an answer if it exists or an error.
 
-### What is the capital of [Country]
-### What is flag of [Country]
-### What countries start with [letters]
-### What is the ISO alpha-2 country code for [Country]
+## Supported inquiries
+
+### What is the capital of [Country]?
+### What is the flag of [Country]?
+### What countries start with [letters]?
+### What is the ISO alpha-2 country code for [Country]?
