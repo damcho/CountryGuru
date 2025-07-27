@@ -20,27 +20,27 @@ struct InquiryChatScreenViewModelTests {
     }
 
     @Test
-    func cancells_inquiry_response_callback_on_second_inquiry() async throws {
+    func cancells_first_inquiry_response_callback_on_second_inquiry() async throws {
         var firstInquiryResponseCallbackCalled = false
         var secondInquiryResponseCallbackCalled = false
 
-        let sut = await makeSUT()
+        let sut = await makeSUT(asyncTask: taskWithDelay)
 
-        await confirmation("wait for response callback to be called", expectedCount: 1) { Confirmation in
+        await confirmation("for response callback to be called", expectedCount: 1) { Confirmation in
             await sut.ask(question: "first inquiry") {
                 firstInquiryResponseCallbackCalled = true
                 Confirmation()
             }
-            let task1 = await sut.inquityTask
+            let firstTask = await sut.inquityTask
             await sut.ask(question: "second inquiry") {
                 secondInquiryResponseCallbackCalled = true
                 Confirmation()
             }
-            let task2 = await sut.inquityTask
+            let secondTask = await sut.inquityTask
             await sut.inquityTask?.value
 
-            #expect(task1?.isCancelled == true)
-            #expect(task2?.isCancelled == false)
+            #expect(firstTask?.isCancelled == true)
+            #expect(secondTask?.isCancelled == false)
         }
 
         #expect(firstInquiryResponseCallbackCalled == false)
@@ -49,12 +49,17 @@ struct InquiryChatScreenViewModelTests {
 }
 
 extension InquiryChatScreenViewModelTests {
+    var taskWithDelay: InquiryHandler {
+        { _ in
+            try await Task.sleep(nanoseconds: 100)
+            return .text("a response")
+        }
+    }
+
     @MainActor
-    func makeSUT() -> InquiryChatScreenViewModel {
+    func makeSUT(asyncTask: @escaping InquiryHandler = { _ in .text("text response") }) -> InquiryChatScreenViewModel {
         InquiryChatScreenViewModel {
-            InquiryResponseViewModel { _ in
-                .text("a response")
-            }
+            InquiryResponseViewModel(questionHandler: asyncTask)
         }
     }
 }
