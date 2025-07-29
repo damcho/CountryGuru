@@ -5,6 +5,7 @@
 //  Created by Damian Modernell on 15/3/25.
 //
 
+import CoreML
 import Foundation
 
 public enum CountryGuruComposer {
@@ -61,9 +62,7 @@ public enum CountryGuruComposer {
                 httpClient: httpClient,
                 baseURL: dataSourceURL
             ),
-            inquiryInterpreter: BasicQuestionInterpreter(
-                supportedInquiries: supportedQuestions
-            )
+            inquiryInterpreter: try! CoreMLInterpreter(model: CountryGuru(configuration: MLModelConfiguration()))
         )
         return adapter
     }
