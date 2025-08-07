@@ -24,7 +24,7 @@ extension ResponseState {
                 }
             )
         case .notSupported:
-            ReceiverTextMessageView(text: "This question is not supported")
+            ReceiverTextMessageView(text: "I could not understand or I am unable to respond this type of question")
         case let .success(response):
             switch response {
             case let .text(message):
