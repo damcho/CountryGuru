@@ -62,7 +62,10 @@ public enum CountryGuruComposer {
                 httpClient: httpClient,
                 baseURL: dataSourceURL
             ),
-            inquiryInterpreter: try! CoreMLInterpreter(model: CountryGuru(configuration: MLModelConfiguration()))
+            inquiryInterpreter: try! CoreMLInterpreter(
+                model: CountryGuru(configuration: MLModelConfiguration()),
+                inquiries: supportedQuestions
+            )
         )
         return adapter
     }

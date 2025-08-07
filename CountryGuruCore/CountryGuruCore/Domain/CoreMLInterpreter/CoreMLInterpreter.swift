@@ -11,6 +11,18 @@ import NaturalLanguage
 
 struct CoreMLInterpreter {
     let model: CountryGuru
+    let inquiries: [AnyInquiry]
+
+    func retrieveInquiry(for key: String) throws -> InquiryCreator {
+        guard
+            let anInquiry = inquiries.first(where: { inquiry in
+                inquiry.question == key
+            })
+        else {
+            throw InquiryInterpreterError.notSupported
+        }
+        return anInquiry.inquiryCreator
+    }
 }
 
 // MARK: InquiryInterpreter
@@ -21,20 +33,36 @@ extension CoreMLInterpreter: InquiryInterpreter {
             let predictedIntent = try model.prediction(text: question.lowercased())
             switch predictedIntent.label {
             case "capital":
-                return try CountryCapitalQuestion(
-                    countryName: question.extractDomain(after: "of")
+                return try retrieveInquiry(
+                    for: CountryCapitalQuestion.question
+                )(
+                    question.extractDomain(
+                        after: "of"
+                    )
                 )
             case "flag":
-                return try CountryFlagQuestion(
-                    countryName: question.extractDomain(after: "of")
+                return try retrieveInquiry(
+                    for: CountryFlagQuestion.question
+                )(
+                    question.extractDomain(
+                        after: "of"
+                    )
                 )
             case "iso2":
-                return try ISOalpha2CountryQuestion(
-                    countryName: question.extractDomain(after: "of")
+                return try retrieveInquiry(
+                    for: ISOalpha2CountryQuestion.question
+                )(
+                    question.extractDomain(
+                        after: "of"
+                    )
                 )
             case "startswith":
-                return try CountryPrenomQuestion(
-                    countryPrenom: question.extractDomain(after: "with")
+                return try retrieveInquiry(
+                    for: CountryPrenomQuestion.question
+                )(
+                    question.extractDomain(
+                        after: "with"
+                    )
                 )
             default:
                 throw InquiryInterpreterError.notSupported

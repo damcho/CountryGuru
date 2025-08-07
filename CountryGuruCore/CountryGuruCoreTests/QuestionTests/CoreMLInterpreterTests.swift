@@ -98,6 +98,9 @@ struct CoreMLInterpreterTests {
 
 extension CoreMLInterpreterTests {
     func makeSUT(with inquiriesMap: [AnyInquiry]) -> CoreMLInterpreter {
-        try! CoreMLInterpreter(model: CountryGuru(configuration: MLModelConfiguration()))
+        try! CoreMLInterpreter(
+            model: CountryGuru(configuration: MLModelConfiguration()),
+            inquiries: CountryGuruComposer.inquiriesArray
+        )
     }
 }
