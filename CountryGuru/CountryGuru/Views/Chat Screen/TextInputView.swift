@@ -14,17 +14,24 @@ struct TextInputView: View {
     var body: some View {
         HStack {
             TextField(
-                "",
+                "Ask a question...",
                 text: $message
             )
-            .textFieldStyle(.roundedBorder)
+            .padding(10)
+            .background(Color(.systemGray6))
+            .cornerRadius(20)
             .textInputAutocapitalization(.never)
 
-            Button("Send") {
+            Button(action: {
                 onSendAction(message)
                 message = ""
-            }.disabled(message.isEmpty)
-        }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+            }, label: {
+                Image(systemName: "paperplane.fill")
+                    .foregroundColor(message.isEmpty ? .gray : .blue)
+                    .padding(10)
+            }).disabled(message.isEmpty)
+
+        }.padding()
     }
 }
 

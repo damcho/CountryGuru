@@ -47,7 +47,7 @@ struct InquiryViewModelTests {
 
         await sut.ask(question)
 
-        await #expect(sut.state.toView() is Text)
+        await #expect(sut.state.toView() is ReceiverTextMessageView)
     }
 
     @Test

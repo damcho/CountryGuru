@@ -13,9 +13,9 @@ import Testing
 struct ChatMessageViewFactoryTests {
     @Test
     func creates_proper_view_on_corresponding_query_response() async throws {
-        await #expect(ResponseState.success(.text("a message")).toView() is Text)
+        await #expect(ResponseState.success(.text("a message")).toView() is ReceiverTextMessageView)
         await #expect(ResponseState.success(.image(anyURL)).toView() is ImageMessageView)
-        await #expect(ResponseState.success(.multiple(["a message"])).toView() is Text)
+        await #expect(ResponseState.success(.multiple(["a message"])).toView() is ReceiverTextMessageView)
     }
 }
 

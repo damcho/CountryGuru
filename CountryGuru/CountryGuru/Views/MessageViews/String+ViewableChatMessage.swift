@@ -11,7 +11,10 @@ import SwiftUI
 extension String: ViewableChatMessage {
     func toChatMessageView() -> some View {
         Text(self)
-            .addChatBubble(sender: true)
+            .foregroundColor(.primary)
+            .padding(12)
+            .background(Color(.systemGray5))
+            .addChatBubble(sender: true, error: false)
             .senderMessageAlignment()
     }
 }

@@ -27,6 +27,7 @@ struct InquiryChatScreen: View {
                     }
                     .scrollTargetLayout()
                 }
+                .padding(.horizontal)
                 .onChange(of: viewModel.responseLoadedTrigger) {
                     scrollToBottom(proxy)
                 }
