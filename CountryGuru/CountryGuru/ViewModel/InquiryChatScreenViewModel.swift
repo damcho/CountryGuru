@@ -14,6 +14,7 @@ typealias InquiryResolverFactory = () -> InquiryResponseViewModel
 @MainActor
 class InquiryChatScreenViewModel: ObservableObject {
     @Published var rows: [IdentifiableChatRow] = []
+    @Published var responseLoadedTrigger: UUID = .init()
     let inquiryResolverFactory: InquiryResolverFactory
     var inquityTask: Task<Void, Never>? = nil
 
@@ -21,7 +22,11 @@ class InquiryChatScreenViewModel: ObservableObject {
         self.inquiryResolverFactory = inquiryResolverFactory
     }
 
-    func ask(question: String, onInquiryResponse: @escaping () -> Void) {
+    func didLoadResponse() async {
+        responseLoadedTrigger = UUID()
+    }
+
+    func ask(question: String) {
         inquityTask?.cancel()
         let inquiryResolver = inquiryResolverFactory()
         rows.append(IdentifiableChatRow(message: question))
@@ -30,9 +35,7 @@ class InquiryChatScreenViewModel: ObservableObject {
         inquityTask = Task.detached {
             await inquiryResolver.ask(question)
             if Task.isCancelled { return }
-            await MainActor.run {
-                onInquiryResponse()
-            }
+            await self.didLoadResponse()
         }
     }
 }

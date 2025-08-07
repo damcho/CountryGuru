@@ -30,7 +30,7 @@ public final class URLSessionHTTPClient {
         }
     }
 
-    public func get(from url: URL, completion: @escaping (HTTPResult) -> Void) -> HTTPClientTask {
+    public func get(from url: URL, completion: @escaping @Sendable (HTTPResult) -> Void) -> HTTPClientTask {
         let task = session.dataTask(with: url) { data, response, error in
             completion(Result {
                 if let error {

@@ -9,9 +9,9 @@ public enum InquiryInterpreterError: Error {
     case notSupported
 }
 
-public typealias InquiryCreator = (String) -> Inquiry
+public typealias InquiryCreator = @Sendable (String) -> Inquiry
 
-public struct AnyInquiry {
+public struct AnyInquiry: Sendable {
     let question: String
     let inquiryCreator: InquiryCreator
 

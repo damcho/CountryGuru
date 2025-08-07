@@ -10,7 +10,6 @@ import SwiftUI
 
 struct InquiryChatScreen: View {
     @StateObject var viewModel: InquiryChatScreenViewModel
-    @State private var scrollTrigger: UUID?
     let dummyLastRow: some View = Color.clear
         .frame(height: 1)
         .id("bottom")
@@ -28,7 +27,7 @@ struct InquiryChatScreen: View {
                     }
                     .scrollTargetLayout()
                 }
-                .onChange(of: scrollTrigger) {
+                .onChange(of: viewModel.responseLoadedTrigger) {
                     scrollToBottom(proxy)
                 }
                 .onAppear {
@@ -37,10 +36,7 @@ struct InquiryChatScreen: View {
             }
 
             TextInputView(onSendAction: { text in
-                viewModel.ask(question: text, onInquiryResponse: {
-                    scrollTrigger = UUID()
-                })
-                scrollTrigger = UUID()
+                viewModel.ask(question: text)
             })
         }
         .padding()
@@ -56,7 +52,13 @@ struct InquiryChatScreen: View {
 #Preview {
     InquiryChatScreen(viewModel: InquiryChatScreenViewModel(
         inquiryResolverFactory: {
-            InquiryResponseViewModel { _ in .text(" a response") }
+            InquiryResponseViewModel(with: DummyQuestionHandable())
         }
     ))
+}
+
+struct DummyQuestionHandable: QuestionHandable {
+    func didAskRaw(_ question: String) async throws -> CountryGuruCore.QueryResponse {
+        .text("a response")
+    }
 }

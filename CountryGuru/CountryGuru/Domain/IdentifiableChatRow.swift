@@ -8,12 +8,13 @@
 import Foundation
 import SwiftUI
 
-protocol ViewableChatMessage {
+@MainActor
+protocol ViewableChatMessage: Sendable {
     associatedtype ChatMessageView: View
     func toChatMessageView() -> ChatMessageView
 }
 
-struct IdentifiableChatRow: Identifiable {
+struct IdentifiableChatRow: Identifiable, Sendable {
     var id = UUID()
     let message: any ViewableChatMessage
 }

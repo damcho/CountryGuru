@@ -6,6 +6,7 @@
 //
 
 @testable import CountryGuru
+import CountryGuruCore
 import Testing
 
 struct InquiryChatScreenViewModelTests {
@@ -14,42 +15,33 @@ struct InquiryChatScreenViewModelTests {
         let sut = await makeSUT()
         #expect(await sut.rows.count == 0)
 
-        _ = await sut.ask(question: "What is the capital of France?", onInquiryResponse: {})
+        _ = await sut.ask(question: "What is the capital of France?")
 
         #expect(await sut.rows.count == 2)
     }
 
     @Test
     func cancells_first_inquiry_response_callback_on_second_inquiry() async throws {
-        var firstInquiryResponseCallbackCalled = false
-        var secondInquiryResponseCallbackCalled = false
-
         let sut = await makeSUT(asyncTask: taskWithDelay)
+        let initialScrollTrigger = await sut.responseLoadedTrigger
 
-        await confirmation("for response callback to be called", expectedCount: 1) { Confirmation in
-            await sut.ask(question: "first inquiry") {
-                firstInquiryResponseCallbackCalled = true
-                Confirmation()
-            }
-            let firstTask = await sut.inquityTask
-            await sut.ask(question: "second inquiry") {
-                secondInquiryResponseCallbackCalled = true
-                Confirmation()
-            }
-            let secondTask = await sut.inquityTask
-            await sut.inquityTask?.value
+        await sut.ask(question: "first inquiry")
+        let firstTask = await sut.inquityTask
+        await sut.ask(question: "second inquiry")
+        let aResponseTrigger = await sut.responseLoadedTrigger
+        #expect(initialScrollTrigger == aResponseTrigger)
+        let secondTask = await sut.inquityTask
+        await sut.inquityTask?.value
+        let anotherRepsonseTrigger = await sut.responseLoadedTrigger
+        #expect(initialScrollTrigger != anotherRepsonseTrigger)
 
-            #expect(firstTask?.isCancelled == true)
-            #expect(secondTask?.isCancelled == false)
-        }
-
-        #expect(firstInquiryResponseCallbackCalled == false)
-        #expect(secondInquiryResponseCallbackCalled == true)
+        #expect(firstTask?.isCancelled == true)
+        #expect(secondTask?.isCancelled == false)
     }
 }
 
 extension InquiryChatScreenViewModelTests {
-    var taskWithDelay: InquiryHandler {
+    var taskWithDelay: @Sendable (String) async throws -> QueryResponse {
         { _ in
             try await Task.sleep(nanoseconds: 100)
             return .text("a response")
@@ -57,9 +49,11 @@ extension InquiryChatScreenViewModelTests {
     }
 
     @MainActor
-    func makeSUT(asyncTask: @escaping InquiryHandler = { _ in .text("text response") }) -> InquiryChatScreenViewModel {
+    func makeSUT(asyncTask: @escaping @Sendable (String) async throws -> QueryResponse = { _ in
+        .text("text response")
+    }) -> InquiryChatScreenViewModel {
         InquiryChatScreenViewModel {
-            InquiryResponseViewModel(questionHandler: asyncTask)
+            InquiryResponseViewModel(with: DummyQuestionHandable(action: asyncTask))
         }
     }
 }

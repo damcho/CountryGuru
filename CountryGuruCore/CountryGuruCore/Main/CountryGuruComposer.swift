@@ -10,7 +10,7 @@ import Foundation
 
 public enum CountryGuruComposer {
     static let dataSourceURL = URL(string: "https://restcountries.com/v3.1")!
-    static let httpClient = URLSessionHTTPClient(session: .shared)
+    nonisolated(unsafe) static let httpClient = URLSessionHTTPClient(session: .shared)
 
     public static let iso2CountryInquiry =
         AnyInquiry(

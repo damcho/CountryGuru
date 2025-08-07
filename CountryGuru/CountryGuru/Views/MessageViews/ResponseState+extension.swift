@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 
 extension ResponseState {
+    @MainActor
     func toView() -> any View {
         switch self {
         case .processing:

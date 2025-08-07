@@ -9,9 +9,9 @@ import CountryGuruCore
 import Foundation
 import SwiftUI
 
-typealias InquiryChatHandler = (String) async -> Void
+typealias InquiryChatHandler = @Sendable (String) async -> Void
 
-enum ResponseState {
+enum ResponseState: Sendable {
     case processing
     case success(QueryResponse)
     case error(InquiryChatHandler, String)
@@ -20,17 +20,17 @@ enum ResponseState {
 
 @MainActor
 class InquiryResponseViewModel: ObservableObject {
-    let questionHandler: InquiryHandler
+    nonisolated(unsafe) let questionHandler: QuestionHandable
 
     @Published var state: ResponseState = .processing
 
-    init(questionHandler: @escaping InquiryHandler) {
+    init(with questionHandler: QuestionHandable) {
         self.questionHandler = questionHandler
     }
 
     func ask(_ question: String) async {
         do {
-            state = try await .success(questionHandler(question))
+            state = try await .success(questionHandler.didAskRaw(question))
         } catch is HTTPClientError {
             state = .error(ask, question)
         } catch {

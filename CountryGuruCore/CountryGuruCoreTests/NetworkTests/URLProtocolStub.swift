@@ -12,7 +12,7 @@ class URLProtocolStub: URLProtocol {
         let onStartLoading: (URLProtocolStub) -> Void
     }
 
-    private static var _stub: Stub?
+    private nonisolated(unsafe) static var _stub: Stub?
     private static var stub: Stub? {
         get { queue.sync { _stub } }
         set { queue.sync { _stub = newValue } }

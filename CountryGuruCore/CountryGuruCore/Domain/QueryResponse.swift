@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum QueryResponse: Equatable {
+public enum QueryResponse: Equatable, Sendable {
     case text(String)
     case image(URL)
     case multiple([String])

@@ -33,9 +33,7 @@ struct CountryGuruApp: App {
                 InquiryChatScreen(
                     viewModel: InquiryChatScreenViewModel(
                         inquiryResolverFactory: {
-                            InquiryResponseViewModel { question in
-                                try await questionLoader.didAskRaw(question)
-                            }
+                            InquiryResponseViewModel(with: questionLoader)
                         }
                     )
                 ).navigationTitle("Country Guru")

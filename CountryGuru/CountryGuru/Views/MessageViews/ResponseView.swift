@@ -20,10 +20,6 @@ struct ResponseView: View {
 
 #Preview {
     ResponseView(
-        viewModel: InquiryResponseViewModel(
-            questionHandler: { _ in
-                .text("hello world")
-            }
-        )
+        viewModel: InquiryResponseViewModel(with: DummyQuestionHandable())
     )
 }
