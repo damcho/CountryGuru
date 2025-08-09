@@ -22,8 +22,10 @@ while let question = readLine() {
                 multipleResponses.forEach { print($0) }
             default: break
             }
+        } catch is InquiryInterpreterError {
+            print("I could not understand or I am unable to respond this type of question")
         } catch {
-            print("There was an issue, please try again")
+            print("An unexpected error occurred while processing your question")
         }
     }
 }
