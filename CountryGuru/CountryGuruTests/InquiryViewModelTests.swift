@@ -56,7 +56,7 @@ struct InquiryViewModelTests {
             throw InquiryInterpreterError.notSupported
         }))
 
-        await #expect(sut.state.toView() is ProgressView<EmptyView, EmptyView>)
+        await #expect(sut.state.toView() is ResponseLoaderIndicatorView)
     }
 }
 
