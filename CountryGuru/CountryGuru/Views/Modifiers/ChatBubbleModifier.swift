@@ -18,6 +18,7 @@ struct ChatBubbleModifier: ViewModifier {
                     isSender ? Color(.systemGray6) : .blue
             )
             .cornerRadius(16)
+            .shadow(color: .black.opacity(0.1), radius: 1, x: 0, y: 1)
     }
 }
 

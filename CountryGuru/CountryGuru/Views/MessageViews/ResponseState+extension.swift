@@ -14,7 +14,7 @@ extension ResponseState {
     func toView() -> any View {
         switch self {
         case .processing:
-            ProgressView()
+            ResponseLoaderIndicatorView()
         case let .error(ask, question):
             RetryView(
                 onRetry: {
