@@ -48,6 +48,9 @@ struct CoreMLInterpreterTests {
         #expect(
             try sut.inquiry(from: "         Which is the capital of Belgium?") is CountryCapitalQuestion
         )
+        #expect(
+            try sut.inquiry(from: "         Which is the capital of Belgium  ?") is CountryCapitalQuestion
+        )
     }
 
     @Test

@@ -30,13 +30,18 @@ struct CoreMLInterpreter {
 extension CoreMLInterpreter: InquiryInterpreter {
     func inquiry(from question: String) throws -> any Inquiry {
         do {
-            let predictedIntent = try model.prediction(text: question.lowercased().trimmingCharacters(in: .whitespaces))
+            let trimmedQUestion = question.lowercased().trimmingCharacters(in: CharacterSet(charactersIn: " .,:;!?"))
+                .lowercased()
+            let predictedIntent = try model
+                .prediction(
+                    text: trimmedQUestion
+                )
             switch predictedIntent.label {
             case "capital":
                 return try retrieveInquiry(
                     for: CountryCapitalQuestion.question
                 )(
-                    question.extractDomain(
+                    trimmedQUestion.extractDomain(
                         after: "of"
                     )
                 )
@@ -44,7 +49,7 @@ extension CoreMLInterpreter: InquiryInterpreter {
                 return try retrieveInquiry(
                     for: CountryFlagQuestion.question
                 )(
-                    question.extractDomain(
+                    trimmedQUestion.extractDomain(
                         after: "of"
                     )
                 )
@@ -52,7 +57,7 @@ extension CoreMLInterpreter: InquiryInterpreter {
                 return try retrieveInquiry(
                     for: ISOalpha2CountryQuestion.question
                 )(
-                    question.extractDomain(
+                    trimmedQUestion.extractDomain(
                         after: "of"
                     )
                 )
@@ -60,7 +65,7 @@ extension CoreMLInterpreter: InquiryInterpreter {
                 return try retrieveInquiry(
                     for: CountryPrenomQuestion.question
                 )(
-                    question.extractDomain(
+                    trimmedQUestion.extractDomain(
                         after: "with"
                     )
                 )
