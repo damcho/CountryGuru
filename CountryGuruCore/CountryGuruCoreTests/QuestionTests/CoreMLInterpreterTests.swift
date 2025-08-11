@@ -42,6 +42,12 @@ struct CoreMLInterpreterTests {
         #expect(
             try sut.inquiry(from: "what capital of Brazil") is CountryCapitalQuestion
         )
+        #expect(
+            try sut.inquiry(from: "Which is the capital of Belgium?") is CountryCapitalQuestion
+        )
+        #expect(
+            try sut.inquiry(from: "         Which is the capital of Belgium?") is CountryCapitalQuestion
+        )
     }
 
     @Test
@@ -78,6 +84,9 @@ struct CoreMLInterpreterTests {
         #expect(
             try sut.inquiry(from: "country start with a") is CountryPrenomQuestion
         )
+        #expect(
+            try sut.inquiry(from: "Which countries start with BR") is CountryPrenomQuestion
+        )
     }
 
     @Test
@@ -92,6 +101,10 @@ struct CoreMLInterpreterTests {
         )
         #expect(
             try sut.inquiry(from: "what is alpha 2 code of Argentina") is ISOalpha2CountryQuestion
+        )
+
+        #expect(
+            try sut.inquiry(from: "which is the iso code of argentina?") is ISOalpha2CountryQuestion
         )
     }
 }

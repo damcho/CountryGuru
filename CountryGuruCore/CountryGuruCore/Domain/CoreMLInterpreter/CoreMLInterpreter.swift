@@ -30,7 +30,7 @@ struct CoreMLInterpreter {
 extension CoreMLInterpreter: InquiryInterpreter {
     func inquiry(from question: String) throws -> any Inquiry {
         do {
-            let predictedIntent = try model.prediction(text: question.lowercased())
+            let predictedIntent = try model.prediction(text: question.lowercased().trimmingCharacters(in: .whitespaces))
             switch predictedIntent.label {
             case "capital":
                 return try retrieveInquiry(
