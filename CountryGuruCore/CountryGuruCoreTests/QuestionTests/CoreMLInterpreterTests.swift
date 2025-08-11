@@ -109,6 +109,9 @@ struct CoreMLInterpreterTests {
         #expect(
             try sut.inquiry(from: "which is the iso code of argentina?") is ISOalpha2CountryQuestion
         )
+        #expect(
+            try sut.inquiry(from: "What is the ISO alpha-2 country code for Greece?") is ISOalpha2CountryQuestion
+        )
     }
 }
 

@@ -42,7 +42,7 @@ extension CoreMLInterpreter: InquiryInterpreter {
                     for: CountryCapitalQuestion.question
                 )(
                     trimmedQUestion.extractDomain(
-                        after: "of"
+                        after: ["of"]
                     )
                 )
             case "flag":
@@ -50,7 +50,7 @@ extension CoreMLInterpreter: InquiryInterpreter {
                     for: CountryFlagQuestion.question
                 )(
                     trimmedQUestion.extractDomain(
-                        after: "of"
+                        after: ["of"]
                     )
                 )
             case "iso2":
@@ -58,7 +58,7 @@ extension CoreMLInterpreter: InquiryInterpreter {
                     for: ISOalpha2CountryQuestion.question
                 )(
                     trimmedQUestion.extractDomain(
-                        after: "of"
+                        after: ["of", "for"]
                     )
                 )
             case "startswith":
@@ -66,7 +66,7 @@ extension CoreMLInterpreter: InquiryInterpreter {
                     for: CountryPrenomQuestion.question
                 )(
                     trimmedQUestion.extractDomain(
-                        after: "with"
+                        after: ["with"]
                     )
                 )
             default:
