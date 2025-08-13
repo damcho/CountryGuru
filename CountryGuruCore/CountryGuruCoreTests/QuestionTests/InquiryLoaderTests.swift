@@ -39,7 +39,12 @@ extension InquiryLoaderTests {
 
 struct HTTPClientStub: HTTPClient {
     let result: Result<(HTTPURLResponse, Data), HTTPClientError>
+
     func load(url: URL) async throws(HTTPClientError) -> (HTTPURLResponse, Data) {
+        try result.get()
+    }
+
+    func post(url: URL, body: Data, headers: [HTTPHeader]) async throws(HTTPClientError) -> (HTTPURLResponse, Data) {
         try result.get()
     }
 }

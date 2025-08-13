@@ -45,4 +45,36 @@ public final class URLSessionHTTPClient {
         task.resume()
         return URLSessionTaskWrapper(wrapped: task)
     }
+
+    public func post(url: URL, body: Data, headers: [String: String]) async throws -> (HTTPURLResponse, Data) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = body
+
+        for (key, value) in headers {
+            request.setValue(value, forHTTPHeaderField: key)
+        }
+
+        let result = await withCheckedContinuation { continuation in
+            let task = session.dataTask(with: request) { data, response, error in
+                continuation.resume(returning: Result {
+                    if let error {
+                        throw error
+                    } else if let data, let response = response as? HTTPURLResponse {
+                        return (data, response)
+                    } else {
+                        throw UnexpectedValuesRepresentation()
+                    }
+                })
+            }
+            task.resume()
+        }
+
+        do {
+            let aResult = try result.get()
+            return (aResult.1, aResult.0)
+        } catch {
+            throw error
+        }
+    }
 }
