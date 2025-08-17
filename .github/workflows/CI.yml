@@ -24,7 +24,28 @@ jobs:
           xcode-version: '16.2'
 
       - name: Xcode version
-        run: /usr/bin/xcodebuild -version
+        run: xcodebuild -version | cat
 
-      - name: Build and Test
+      - name: Check API key presence
+        id: check_key
+        run: |
+          if [ -z "${OPENAI_API_KEY}" ]; then
+            echo "OPENAI_API_KEY missing";
+            echo "has_key=false" >> $GITHUB_OUTPUT;
+          else
+            echo "OPENAI_API_KEY set";
+            echo "has_key=true" >> $GITHUB_OUTPUT;
+          fi
+
+      - name: Build and Test (unit)
         run: xcodebuild clean build test -workspace "CountryGuru.xcworkspace" -scheme "CountryGuruCITests" -configuration Debug CODE_SIGNING_REQUIRED=NO -destination "platform=iOS Simulator,name=iPhone 16" ONLY_ACTIVE_ARCH=YES | cat
+
+      - name: Run Integration Tests (PR to main)
+        if: github.event_name == 'pull_request' && github.base_ref == 'main' && steps.check_key.outputs.has_key == 'true'
+        run: |
+          cd CountryGuruCore
+          xcodebuild -project CountryGuruCore.xcodeproj \
+            -scheme CountryGuruCore \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -only-testing:CountryGuruCoreIntegrationTests \
+            test | cat
