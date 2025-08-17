@@ -14,15 +14,10 @@ struct OpenAIInterpreterIntegrationTests {
 
     private let httpClient = URLSessionHTTPClient(session: .shared)
 
-    private var sut: OpenAIInterpreter {
+    private func makeSUT() -> OpenAIInterpreter {
         OpenAIInterpreter(
             apiKey: CountryGuruComposer.openAIAPIKey,
-            inquiries: [
-                AnyInquiry(questionType: .countryCapital, inquiryCreator: CountryCapitalQuestion.init),
-                AnyInquiry(questionType: .countryFlag, inquiryCreator: CountryFlagQuestion.init),
-                AnyInquiry(questionType: .countryISOalpha2code, inquiryCreator: ISOalpha2CountryQuestion.init),
-                AnyInquiry(questionType: .countryPrenom, inquiryCreator: CountryPrenomQuestion.init)
-            ],
+            inquiries: CountryGuruComposer.inquiriesArray,
             httpClient: httpClient
         )
     }
@@ -32,7 +27,7 @@ struct OpenAIInterpreterIntegrationTests {
     @Test
     func capital_question_creates_country_capital_inquiry() async throws {
         let question = "What is the capital of Argentina?"
-        let inquiry = try await sut.inquiry(from: question)
+        let inquiry = try await makeSUT().inquiry(from: question)
 
         #expect(inquiry is CountryCapitalQuestion)
         #expect((inquiry as? CountryCapitalQuestion)?.countryName == "Argentina")
@@ -41,7 +36,7 @@ struct OpenAIInterpreterIntegrationTests {
     @Test
     func capital_question_with_different_phrasing() async throws {
         let question = "Show me the capital of Brazil"
-        let inquiry = try await sut.inquiry(from: question)
+        let inquiry = try await makeSUT().inquiry(from: question)
 
         #expect(inquiry is CountryCapitalQuestion)
         #expect((inquiry as? CountryCapitalQuestion)?.countryName == "Brazil")
@@ -52,7 +47,7 @@ struct OpenAIInterpreterIntegrationTests {
     @Test
     func flag_question_creates_country_flag_inquiry() async throws {
         let question = "What's the flag of France?"
-        let inquiry = try await sut.inquiry(from: question)
+        let inquiry = try await makeSUT().inquiry(from: question)
 
         #expect(inquiry is CountryFlagQuestion)
         #expect((inquiry as? CountryFlagQuestion)?.countryName == "France")
@@ -61,7 +56,7 @@ struct OpenAIInterpreterIntegrationTests {
     @Test
     func flag_question_with_different_phrasing() async throws {
         let question = "Display the flag for Germany"
-        let inquiry = try await sut.inquiry(from: question)
+        let inquiry = try await makeSUT().inquiry(from: question)
 
         #expect(inquiry is CountryFlagQuestion)
         #expect((inquiry as? CountryFlagQuestion)?.countryName == "Germany")
@@ -72,7 +67,7 @@ struct OpenAIInterpreterIntegrationTests {
     @Test
     func iso_question_creates_iso_alpha2_inquiry() async throws {
         let question = "What is the ISO code of Japan?"
-        let inquiry = try await sut.inquiry(from: question)
+        let inquiry = try await makeSUT().inquiry(from: question)
 
         #expect(inquiry is ISOalpha2CountryQuestion)
         #expect((inquiry as? ISOalpha2CountryQuestion)?.countryName == "Japan")
@@ -81,7 +76,7 @@ struct OpenAIInterpreterIntegrationTests {
     @Test
     func iso_question_with_different_phrasing() async throws {
         let question = "Give me the alpha-2 code for Australia"
-        let inquiry = try await sut.inquiry(from: question)
+        let inquiry = try await makeSUT().inquiry(from: question)
 
         #expect(inquiry is ISOalpha2CountryQuestion)
         #expect((inquiry as? ISOalpha2CountryQuestion)?.countryName == "Australia")
@@ -92,7 +87,7 @@ struct OpenAIInterpreterIntegrationTests {
     @Test
     func startswith_question_creates_country_prenom_inquiry() async throws {
         let question = "Which countries start with BR?"
-        let inquiry = try await sut.inquiry(from: question)
+        let inquiry = try await makeSUT().inquiry(from: question)
 
         #expect(inquiry is CountryPrenomQuestion)
         #expect((inquiry as? CountryPrenomQuestion)?.countryPrenom == "BR")
@@ -101,7 +96,7 @@ struct OpenAIInterpreterIntegrationTests {
     @Test
     func startswith_question_with_different_phrasing() async throws {
         let question = "Show countries that start with A"
-        let inquiry = try await sut.inquiry(from: question)
+        let inquiry = try await makeSUT().inquiry(from: question)
 
         #expect(inquiry is CountryPrenomQuestion)
         #expect((inquiry as? CountryPrenomQuestion)?.countryPrenom == "A")
@@ -114,7 +109,7 @@ struct OpenAIInterpreterIntegrationTests {
         let question = "What's the weather like in Paris?"
 
         await #expect(throws: InquiryInterpreterError.notSupported) {
-            _ = try await sut.inquiry(from: question)
+            _ = try await makeSUT().inquiry(from: question)
         }
     }
 
@@ -123,7 +118,7 @@ struct OpenAIInterpreterIntegrationTests {
         let question = "capital of"
 
         await #expect(throws: InquiryInterpreterError.notSupported) {
-            _ = try await sut.inquiry(from: question)
+            _ = try await makeSUT().inquiry(from: question)
         }
     }
 
@@ -132,7 +127,7 @@ struct OpenAIInterpreterIntegrationTests {
         let question = ""
 
         await #expect(throws: InquiryInterpreterError.notSupported) {
-            _ = try await sut.inquiry(from: question)
+            _ = try await makeSUT().inquiry(from: question)
         }
     }
 
@@ -143,7 +138,7 @@ struct OpenAIInterpreterIntegrationTests {
         let question = "What is the capital of Canada?"
         let startTime = Date()
 
-        _ = try await sut.inquiry(from: question)
+        _ = try await makeSUT().inquiry(from: question)
 
         let responseTime = Date().timeIntervalSince(startTime)
         #expect(responseTime < 10.0, "Response time should be under 10 seconds")

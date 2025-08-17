@@ -14,33 +14,52 @@ struct RetryView: View {
         Button {
             onRetry()
         } label: {
-            VStack(alignment: .center, spacing: 4) {
-                HStack(alignment: .center, spacing: 8) {
-                    Image(systemName: "exclamationmark.circle.fill")
-                        .foregroundColor(.red)
-                        .font(.system(size: 16))
-                    Text(
-                        "There was either a network error, or we could not find a proper answer to your question"
-                    )
-                    .font(.system(size: 14))
-                    .foregroundColor(.red)
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 12) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundColor(.orange)
+                        .font(.title2)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Something went wrong")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+
+                        Text("We couldn't process your question. Please try again.")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.leading)
+                    }
                 }
-                Text("Tap to retry")
-                    .font(.footnote)
-                    .foregroundColor(.blue)
-                    .underline()
+
+                HStack {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.system(size: 14, weight: .medium))
+                    Text("Tap to retry")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                }
+                .foregroundColor(.blue)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(Color.blue.opacity(0.1))
+                .cornerRadius(16)
             }
-            .padding(12)
-            .background(Color(red: 1.0, green: 0.95, blue: 0.95))
-            .cornerRadius(18)
-            .overlay(
-                RoundedRectangle(cornerRadius: 18)
-                    .stroke(Color.red.opacity(0.3), lineWidth: 1)
+            .padding(16)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.primary.opacity(0.05))
+                    .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
             )
         }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
 #Preview {
-    RetryView(onRetry: {})
+    VStack(spacing: 16) {
+        RetryView(onRetry: {})
+    }
+    .padding()
+    .background(Color.secondary.opacity(0.05))
 }

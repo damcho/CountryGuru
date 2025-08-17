@@ -7,6 +7,21 @@
 
 import Foundation
 
+extension InquiryType {
+    var promptExample: String {
+        switch self {
+        case .countryCapital:
+            "\"what is the capital of France\"→{\"type\":\"countryCapital\",\"domain\":\"France\"}"
+        case .countryFlag:
+            "\"what's the flag of Brazil\"→{\"type\":\"countryFlag\",\"domain\":\"Brazil\"}"
+        case .countryISOalpha2code:
+            "\"what's the ISO alpha-2 code of Japan\"→{\"type\":\"countryISOalpha2code\",\"domain\":\"Japan\"}"
+        case .countryPrenom:
+            "\"which countries start with BR\"→{\"type\":\"countryPrenom\",\"domain\":\"BR\"}"
+        }
+    }
+}
+
 /// OpenAIInterpreter uses ChatGPT to classify user questions into inquiry types
 /// and then creates the appropriate Inquiry object based on the classification.
 struct OpenAIInterpreter {
@@ -14,7 +29,6 @@ struct OpenAIInterpreter {
     private let inquiries: [AnyInquiry]
     private let httpClient: HTTPClient
 
-    /// Creates an OpenAIInterpreter with the specified API key, supported inquiries, and HTTP client
     init(apiKey: String, inquiries: [AnyInquiry], httpClient: HTTPClient) {
         self.apiKey = apiKey
         self.inquiries = inquiries
@@ -23,19 +37,11 @@ struct OpenAIInterpreter {
 
     private func createSystemPrompt() -> String {
         let classifications = inquiries.map { $0.questionType.rawValue }.joined(separator: "|")
+        let examples = InquiryType.allCases.map(\.promptExample).joined(separator: ",")
         return """
-        Classify: \(classifications)|not_supported
+        You are an expert in understanding country-related questions. Classify: \(classifications)|not_supported
         Format: {"type":"category","domain":"extracted_text"}
-        Examples: "capital of France"→{"type":"\(
-            InquiryType
-                .countryCapital
-        )","domain":"France"}, "ISO alpha-2 code of Japan"→{"type":"\(
-            InquiryType
-                .countryISOalpha2code
-        )","domain":"Japan"}, "countries start with BR"→{"type":"\(
-            InquiryType
-                .countryPrenom
-        )","domain":"BR"}
+        Examples: \(examples)
         JSON only.
         """
     }
@@ -55,7 +61,7 @@ struct OpenAIInterpreter {
 
         let bodyData = try JSONEncoder().encode(requestBody)
 
-        let (httpResponse, data) = try await httpClient.post(
+        let (_, data) = try await httpClient.post(
             url: url,
             body: bodyData,
             headers: [HTTPHeader.authorization(apiKey), HTTPHeader.contentType("application/json")]
@@ -68,7 +74,6 @@ struct OpenAIInterpreter {
 
         let trimmedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        // Parse the JSON response
         guard
             let jsonData = trimmedContent.data(using: .utf8),
             let classification = try? JSONDecoder().decode(ClassificationResponse.self, from: jsonData)

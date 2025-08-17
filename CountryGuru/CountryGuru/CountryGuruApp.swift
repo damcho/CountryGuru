@@ -29,15 +29,13 @@ struct CountryGuruApp: App {
 
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                InquiryChatScreen(
-                    viewModel: InquiryChatScreenViewModel(
-                        inquiryResolverFactory: {
-                            InquiryResponseViewModel(with: questionLoader)
-                        }
-                    )
-                ).navigationTitle("Country Guru")
-            }
+            InquiryChatScreen(
+                viewModel: InquiryChatScreenViewModel(
+                    inquiryResolverFactory: {
+                        InquiryResponseViewModel(with: questionLoader)
+                    }
+                )
+            )
         }
     }
 }

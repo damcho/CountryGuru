@@ -12,25 +12,52 @@ struct ImageMessageView: View {
     @State private var reloadToken = UUID()
 
     var body: some View {
-        AsyncImage(url: urlWithToken) { phase in
-            switch phase {
-            case let .success(image):
-                image
-                    .resizable()
-                    .scaledToFit()
-            case .empty:
-                ProgressView()
-            case .failure:
-                RetryView {
-                    reloadToken = UUID()
-                }.frame(height: 150)
-            @unknown default:
-                EmptyView()
+        VStack(alignment: .leading, spacing: 8) {
+            AsyncImage(url: urlWithToken) { phase in
+                switch phase {
+                case let .success(image):
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .transition(.opacity.combined(with: .scale))
+                case .empty:
+                    HStack {
+                        ProgressView()
+                            .scaleEffect(0.8)
+                        Text("Loading image...")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    .frame(height: 150)
+                case .failure:
+                    VStack(spacing: 12) {
+                        Image(systemName: "photo.fill")
+                            .font(.title2)
+                            .foregroundColor(.secondary)
+                        Text("Failed to load image")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Button("Retry") {
+                            reloadToken = UUID()
+                        }
+                        .font(.caption)
+                        .foregroundColor(.blue)
+                    }
+                    .frame(height: 150)
+                @unknown default:
+                    EmptyView()
+                }
             }
+            .cornerRadius(16)
+            .frame(maxWidth: 250, maxHeight: 250)
+            .aspectRatio(contentMode: .fit)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.secondary.opacity(0.1))
+            )
+            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
         }
-        .cornerRadius(20)
-        .frame(maxWidth: 200, maxHeight: 200)
-        .aspectRatio(contentMode: .fit)
+        .padding(.horizontal, 4)
     }
 
     private var urlWithToken: URL {
@@ -41,5 +68,9 @@ struct ImageMessageView: View {
 }
 
 #Preview {
-    ImageMessageView(imageURL: URL(string: "www.someurl.com")!)
+    VStack(spacing: 16) {
+        ImageMessageView(imageURL: URL(string: "https://example.com/flag.png")!)
+    }
+    .padding()
+    .background(Color.secondary.opacity(0.05))
 }
