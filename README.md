@@ -107,10 +107,27 @@ The app uses OpenAI (via `OpenAIInterpreter`) to understand free-form natural la
 2. Select the `CountryGuruCLI` scheme
 3. Run (or `swift run` if you create a SwiftPM target in the future)
 
-### OpenAI API Key
+### OpenAI API Key (after cloning)
 
-- The core uses an API key provided by `CountryGuruComposer` for the `OpenAIInterpreter`
-- For production, prefer loading from environment or the Keychain and avoid committing secrets
+- You must inject your own key locally.
+- A runtime assertion in `CountryGuruCore/Domain/CountryGuruComposer.compose(...)` will fail if the key is missing.
+
+Steps:
+
+- iOS app (local):
+  1) Product → Scheme → Manage Schemes… → Duplicate your app scheme and uncheck “Shared” (keeps it out of git)
+  2) Edit your personal scheme → Run → Arguments → Environment → add `OPENAI_API_KEY = <your-key>`
+  3) Repeat for the Test action if you plan to run tests (Edit Scheme → Test → Environment)
+  4) Run the app/tests with your personal scheme
+
+- CLI (local): choose one
+  - Per-run: `OPENAI_API_KEY=<your-key> xcrun swift test` (or your xcodebuild command)
+  - Shell profile: `echo 'export OPENAI_API_KEY=<your-key>' >> ~/.zshrc && source ~/.zshrc`
+  - Scheme env: add `OPENAI_API_KEY` in the CLI target’s (unshared) scheme
+
+- CI (GitHub Actions):
+  - Add repository secret `OPENAI_API_KEY` in GitHub → Settings → Secrets and variables → Actions
+  - The provided workflow (`.github/workflows/ci.yml`) injects it via environment so tests can read it
 
 ## Testing
 
