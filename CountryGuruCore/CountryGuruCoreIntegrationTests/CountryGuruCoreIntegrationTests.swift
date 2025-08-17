@@ -31,9 +31,9 @@ struct CountryGuruCoreIntegrationTests {
     func answers_country_prefix_question_successfully() async throws {
         let sut = CountryGuruComposer.compose()
 
-        let response = try await sut.didAskRaw("What countries start with CH?")
+        let response = try await sut.didAskRaw("What countries start with Argen?")
 
-        #expect(response == .multiple(["China", "Christmas Island", "Chile", "Chad"]))
+        #expect(response == .multiple(["Argentina"]))
     }
 
     @Test

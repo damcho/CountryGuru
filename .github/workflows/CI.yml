@@ -44,8 +44,7 @@ jobs:
         if: github.event_name == 'pull_request' && github.base_ref == 'main' && steps.check_key.outputs.has_key == 'true'
         run: |
           cd CountryGuruCore
-          xcodebuild -project CountryGuruCore.xcodeproj \
-            -scheme CountryGuruCore \
+          xcodebuild -scheme CountryGuruCoreIntegrationTests \
             -destination 'platform=iOS Simulator,name=iPhone 16' \
             -only-testing:CountryGuruCoreIntegrationTests \
             test | cat
