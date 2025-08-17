@@ -18,6 +18,7 @@ public struct QuestionInterpreterAdapter {
 
 extension QuestionInterpreterAdapter: QuestionHandable {
     public func didAskRaw(_ question: String) async throws -> QueryResponse {
-        try await inquiryLoader.didAsk(inquiryInterpreter.inquiry(from: question))
+        let inquiry = try await inquiryInterpreter.inquiry(from: question)
+        return try await inquiryLoader.didAsk(inquiry)
     }
 }

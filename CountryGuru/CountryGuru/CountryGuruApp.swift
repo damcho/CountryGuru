@@ -10,7 +10,7 @@ import SwiftUI
 
 let countryFlagQuestion =
     AnyInquiry(
-        question: CountryFlagImageQuestion.question,
+        questionType: .countryFlag,
         inquiryCreator: { countryName in CountryFlagImageQuestion(countryName: countryName) }
     )
 
