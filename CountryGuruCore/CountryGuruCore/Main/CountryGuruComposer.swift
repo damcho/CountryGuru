@@ -61,10 +61,8 @@ public enum CountryGuruComposer {
     )
         -> QuestionInterpreterAdapter
     {
-        assert(
-            !openAIAPIKey.isEmpty,
-            "OPENAI_API_KEY is missing. Set it in your Scheme (Run/Test > Arguments > Environment) or CI secrets."
-        )
+        assertOpenAIAPIkey()
+
         let adapter = QuestionInterpreterAdapter(
             inquiryLoader: RemoteInquiryLoader(
                 httpClient: httpClient,
@@ -81,5 +79,15 @@ public enum CountryGuruComposer {
 
     public static func compose(with inquiries: [AnyInquiry] = inquiriesArray) -> QuestionHandable {
         compose(with: httpClient, supportedQuestions: inquiries)
+    }
+
+    static func assertOpenAIAPIkey() {
+        let isRunningTests = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        if !isRunningTests {
+            assert(
+                !openAIAPIKey.isEmpty,
+                "OPENAI_API_KEY is missing. Set it in your Scheme (Run/Test > Arguments > Environment) or CI secrets."
+            )
+        }
     }
 }
