@@ -38,7 +38,7 @@ struct InquiryViewModelTests {
     }
 
     @Test
-    func displays_not_supported_message_on_not_supported_question() async throws {
+    func displays_not_supported_message_on_not_found_response_error() async throws {
         let question = "a question"
 
         let sut = await InquiryResponseViewModel(with: DummyQuestionHandable(action: { _ in
@@ -47,7 +47,22 @@ struct InquiryViewModelTests {
 
         await sut.ask(question)
 
-        await #expect(sut.state.toView() is ReceiverTextMessageView)
+        let aState = await sut.state
+        #expect(ResponseState.notSupported == aState)
+    }
+
+    @Test
+    func displays_not_supported_message_on_not_supported_response_error() async throws {
+        let question = "a question"
+
+        let sut = await InquiryResponseViewModel(with: DummyQuestionHandable(action: { _ in
+            throw InquiryInterpreterError.notSupported
+        }))
+
+        await sut.ask(question)
+
+        let aState = await sut.state
+        #expect(ResponseState.notSupported == aState)
     }
 
     @Test
@@ -77,5 +92,38 @@ actor DummyQuestionHandable: QuestionHandable {
 
     func didAskRaw(_ question: String) async throws -> CountryGuruCore.QueryResponse {
         try await action(question)
+    }
+}
+
+// MARK: - Test-only Equatable for ResponseState
+
+extension ResponseState: @retroactive Equatable {
+    public static func == (lhs: ResponseState, rhs: ResponseState) -> Bool {
+        switch (lhs, rhs) {
+        case (.processing, .processing):
+            true
+        case (.notSupported, .notSupported):
+            true
+        case let (.success(a), .success(b)):
+            areEqualQueryResponse(a, b)
+        case let (.error(_, qa), .error(_, qb)):
+            // Ignore closure identity; compare only the question string
+            qa == qb
+        default:
+            false
+        }
+    }
+}
+
+private func areEqualQueryResponse(_ lhs: QueryResponse, _ rhs: QueryResponse) -> Bool {
+    switch (lhs, rhs) {
+    case let (.text(la), .text(ra)):
+        la == ra
+    case let (.image(lu), .image(ru)):
+        lu == ru
+    case let (.multiple(la), .multiple(ra)):
+        la == ra
+    default:
+        false
     }
 }

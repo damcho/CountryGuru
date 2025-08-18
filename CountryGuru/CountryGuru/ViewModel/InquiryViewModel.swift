@@ -31,7 +31,9 @@ class InquiryResponseViewModel: ObservableObject {
     func ask(_ question: String) async {
         do {
             state = try await .success(questionHandler.didAskRaw(question))
-        } catch HTTPClientError.notFound {
+        } catch HTTPClientError.notFound,
+            InquiryInterpreterError.notSupported
+        {
             state = .notSupported
         } catch {
             state = .error(ask, question)
