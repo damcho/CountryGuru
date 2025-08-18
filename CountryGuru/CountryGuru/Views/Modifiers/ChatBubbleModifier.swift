@@ -14,11 +14,19 @@ struct ChatBubbleModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background(
-                isError ? Color(red: 1.0, green: 0.95, blue: 0.95) :
-                    isSender ? Color(.systemGray6) : .blue
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(
+                        isError ? Color(.systemRed).opacity(0.1) :
+                            isSender ? Color(.systemGray5) : Color.blue
+                    )
             )
-            .cornerRadius(16)
-            .shadow(color: .black.opacity(0.1), radius: 1, x: 0, y: 1)
+            .cornerRadius(20)
+            .shadow(
+                color: isError ? .red.opacity(0.2) : .black.opacity(0.1),
+                radius: isError ? 2 : 1,
+                x: 0,
+                y: 1
+            )
     }
 }
 

@@ -9,12 +9,16 @@ import CoreML
 import Foundation
 
 public enum CountryGuruComposer {
+    static var openAIAPIKey: String {
+        ProcessInfo.processInfo.environment["OPENAI_API_KEY"] ?? ""
+    }
+
     static let dataSourceURL = URL(string: "https://restcountries.com/v3.1")!
     nonisolated(unsafe) static let httpClient = URLSessionHTTPClient(session: .shared)
 
     public static let iso2CountryInquiry =
         AnyInquiry(
-            question: ISOalpha2CountryQuestion.question,
+            questionType: ISOalpha2CountryQuestion.type,
             inquiryCreator: { countryName in
                 ISOalpha2CountryQuestion(countryName: countryName) as Inquiry
             }
@@ -22,7 +26,7 @@ public enum CountryGuruComposer {
 
     public static let countryFlagInquiry =
         AnyInquiry(
-            question: CountryFlagQuestion.question,
+            questionType: CountryFlagQuestion.type,
             inquiryCreator: { countryName in
                 CountryFlagQuestion(countryName: countryName) as Inquiry
             }
@@ -30,7 +34,7 @@ public enum CountryGuruComposer {
 
     public static let countryCapitalInquiry =
         AnyInquiry(
-            question: CountryCapitalQuestion.question,
+            questionType: CountryCapitalQuestion.type,
             inquiryCreator: { countryName in
                 CountryCapitalQuestion(countryName: countryName) as Inquiry
             }
@@ -38,7 +42,7 @@ public enum CountryGuruComposer {
 
     public static let countryPrenomInquiry =
         AnyInquiry(
-            question: CountryPrenomQuestion.question,
+            questionType: CountryPrenomQuestion.type,
             inquiryCreator: { countryNamePrefix in
                 CountryPrenomQuestion(countryPrenom: countryNamePrefix) as Inquiry
             }
@@ -57,14 +61,17 @@ public enum CountryGuruComposer {
     )
         -> QuestionInterpreterAdapter
     {
+        assertOpenAIAPIkey()
+
         let adapter = QuestionInterpreterAdapter(
             inquiryLoader: RemoteInquiryLoader(
                 httpClient: httpClient,
                 baseURL: dataSourceURL
             ),
-            inquiryInterpreter: try! CoreMLInterpreter(
-                model: CountryGuru(configuration: MLModelConfiguration()),
-                inquiries: supportedQuestions
+            inquiryInterpreter: OpenAIInterpreter(
+                apiKey: openAIAPIKey,
+                inquiries: supportedQuestions,
+                httpClient: httpClient
             )
         )
         return adapter
@@ -72,5 +79,15 @@ public enum CountryGuruComposer {
 
     public static func compose(with inquiries: [AnyInquiry] = inquiriesArray) -> QuestionHandable {
         compose(with: httpClient, supportedQuestions: inquiries)
+    }
+
+    static func assertOpenAIAPIkey() {
+        let isRunningTests = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        if !isRunningTests {
+            assert(
+                !openAIAPIKey.isEmpty,
+                "OPENAI_API_KEY is missing. Set it in your Scheme (Run/Test > Arguments > Environment) or CI secrets."
+            )
+        }
     }
 }

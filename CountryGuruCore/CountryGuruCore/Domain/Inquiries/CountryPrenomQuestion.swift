@@ -6,6 +6,6 @@
 //
 
 struct CountryPrenomQuestion {
-    static let question = "what countries start with"
+    static let type: InquiryType = .countryPrenom
     let countryPrenom: String
 }

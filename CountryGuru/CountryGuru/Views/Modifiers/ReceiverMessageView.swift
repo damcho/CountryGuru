@@ -10,9 +10,11 @@ import SwiftUI
 struct ReceiverMessageView: ViewModifier {
     func body(content: Content) -> some View {
         HStack {
-            Spacer()
-            content.frame(maxWidth: 200, alignment: .trailing)
+            Spacer(minLength: 60)
+            content
+                .frame(maxWidth: 280, alignment: .trailing)
         }
+        .padding(.horizontal, 4)
     }
 }
 

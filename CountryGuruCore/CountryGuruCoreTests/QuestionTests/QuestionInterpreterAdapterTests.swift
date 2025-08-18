@@ -48,7 +48,7 @@ extension QuestionInterpreterAdapterTests {
 
 struct QuestionInterpreterStub: InquiryInterpreter {
     let stub: Result<Inquiry, Error>
-    func inquiry(from question: String) throws -> any Inquiry {
+    func inquiry(from question: String) async throws -> any Inquiry {
         try stub.get()
     }
 }

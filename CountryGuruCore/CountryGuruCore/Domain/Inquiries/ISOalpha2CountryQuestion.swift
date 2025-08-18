@@ -12,7 +12,7 @@ struct DecodableAlpha2Code: Decodable {
 }
 
 struct ISOalpha2CountryQuestion: Inquiry {
-    public static let question = "what is the iso alpha-2 country code for"
+    static let type: InquiryType = .countryISOalpha2code
 
     let countryName: String
     func mappedResponse(from data: Data, httpURLResponse: HTTPURLResponse) throws -> QueryResponse {

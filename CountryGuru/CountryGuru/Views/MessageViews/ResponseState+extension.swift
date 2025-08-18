@@ -24,7 +24,9 @@ extension ResponseState {
                 }
             )
         case .notSupported:
-            ReceiverTextMessageView(text: "I could not understand or I am unable to respond this type of question")
+            ReceiverTextMessageView(
+                text: "I couldn't understand your question. Try asking about country capitals, flags, ISO codes, or countries that start with specific letters."
+            )
         case let .success(response):
             switch response {
             case let .text(message):

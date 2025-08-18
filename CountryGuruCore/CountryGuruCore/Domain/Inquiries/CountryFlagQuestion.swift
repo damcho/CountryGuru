@@ -12,7 +12,7 @@ struct DecodableCountryFlag: Decodable {
 }
 
 open class CountryFlagQuestion: Inquiry {
-    public static let question = "what is the flag of"
+    public static let type: InquiryType = .countryFlag
     public let countryName: String
 
     public init(countryName: String) {

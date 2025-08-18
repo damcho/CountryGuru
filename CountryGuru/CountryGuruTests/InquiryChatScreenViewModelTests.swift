@@ -23,19 +23,16 @@ struct InquiryChatScreenViewModelTests {
     @Test
     func cancells_first_inquiry_response_callback_on_second_inquiry() async throws {
         let sut = await makeSUT(asyncTask: taskWithDelay)
-        let initialScrollTrigger = await sut.responseLoadedTrigger
 
         await sut.ask(question: "first inquiry")
         let firstTask = await sut.inquityTask
-        await sut.ask(question: "second inquiry")
-        let aResponseTrigger = await sut.responseLoadedTrigger
-        #expect(initialScrollTrigger == aResponseTrigger)
-        let secondTask = await sut.inquityTask
-        await sut.inquityTask?.value
-        let anotherRepsonseTrigger = await sut.responseLoadedTrigger
-        #expect(initialScrollTrigger != anotherRepsonseTrigger)
 
+        await sut.ask(question: "second inquiry")
+        let secondTask = await sut.inquityTask
         #expect(firstTask?.isCancelled == true)
+
+        await secondTask?.value
+
         #expect(secondTask?.isCancelled == false)
     }
 }

@@ -14,7 +14,7 @@ typealias InquiryResolverFactory = () -> InquiryResponseViewModel
 @MainActor
 class InquiryChatScreenViewModel: ObservableObject {
     @Published var rows: [IdentifiableChatRow] = []
-    @Published var responseLoadedTrigger: UUID = .init()
+    @Published var scrollTrigger: UUID = .init()
     let inquiryResolverFactory: InquiryResolverFactory
     var inquityTask: Task<Void, Never>? = nil
 
@@ -22,8 +22,8 @@ class InquiryChatScreenViewModel: ObservableObject {
         self.inquiryResolverFactory = inquiryResolverFactory
     }
 
-    func didLoadResponse() async {
-        responseLoadedTrigger = UUID()
+    func scrollChatView() async {
+        scrollTrigger = UUID()
     }
 
     func ask(question: String) {
@@ -31,11 +31,11 @@ class InquiryChatScreenViewModel: ObservableObject {
         let inquiryResolver = inquiryResolverFactory()
         rows.append(IdentifiableChatRow(message: question))
         rows.append(IdentifiableChatRow(message: inquiryResolver))
-
+        scrollTrigger = UUID()
         inquityTask = Task.detached {
             await inquiryResolver.ask(question)
             if Task.isCancelled { return }
-            await self.didLoadResponse()
+            await self.scrollChatView()
         }
     }
 }

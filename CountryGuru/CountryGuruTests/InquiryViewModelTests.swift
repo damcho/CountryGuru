@@ -42,7 +42,7 @@ struct InquiryViewModelTests {
         let question = "a question"
 
         let sut = await InquiryResponseViewModel(with: DummyQuestionHandable(action: { _ in
-            throw InquiryInterpreterError.notSupported
+            throw HTTPClientError.notFound
         }))
 
         await sut.ask(question)

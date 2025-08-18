@@ -11,23 +11,27 @@ struct ResponseLoaderIndicatorView: View {
     @State private var animate = false
 
     var body: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: 6) {
             ForEach(0 ..< 3) { index in
                 Circle()
-                    .frame(width: 8, height: 8)
-                    .foregroundColor(.gray)
-                    .scaleEffect(animate ? 1 : 0.5)
-                    .opacity(animate ? 1 : 0.3)
+                    .frame(width: 10, height: 10)
+                    .foregroundColor(.secondary)
+                    .scaleEffect(animate ? 1 : 0.6)
+                    .opacity(animate ? 0.8 : 0.3)
                     .animation(
-                        .easeInOut(duration: 0.6)
+                        .easeInOut(duration: 0.8)
                             .repeatForever()
-                            .delay(Double(index) * 0.2),
+                            .delay(Double(index) * 0.15),
                         value: animate
                     )
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 6)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.secondary.opacity(0.1))
+        )
         .onAppear {
             animate = true
         }
@@ -35,5 +39,9 @@ struct ResponseLoaderIndicatorView: View {
 }
 
 #Preview {
-    ResponseLoaderIndicatorView()
+    VStack(spacing: 16) {
+        ResponseLoaderIndicatorView()
+    }
+    .padding()
+    .background(Color.secondary.opacity(0.05))
 }
